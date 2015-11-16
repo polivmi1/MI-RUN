@@ -1,0 +1,17 @@
+operation OP-code	 STACK POP	 	RET STACK PUSH
+ADD			0x01	(C:a, C:b)		a.add(b)
+SUB			0x02	(C:a, C:b)		a.sub(b)
+DIV			0x03	(C:a, C:b)		a.div(b)
+MUL			0x04	(C:a, C:b)		a.mul(b)
+NEW	C		0x05		-			reference
+PUSH X		0x06		-			X
+LOAD		0x07		-			register
+STORE		0x08	TOP					-
+CALL F		0x09	parameters		return
+RET			0x0A	return				- + pops datastack till saved ebp
+CLT			0x0B	(C:a, C:b)		a < b (0 or 1)
+CGT			0x0C	(C:a, C:b)		a > b (0 or 1)
+CEQ			0x0D	(C:a, C:b)		a == b (0 or 1)
+CNEQ		0x0E	(C:a, C:b)		a != b (0 or 1)
+CJMP x y	0x0F	a				if(a == 1) jump[eip+x] else jump[eip+y] 
+JMP	x		0x10		-			jump[eip+x]

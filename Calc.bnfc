@@ -1,0 +1,51 @@
+PDefs.   	 Program ::= [Def] ;
+
+DFun.    	 Dfn ::= Id "(" [Arg] ")" "{" [Stm] "}" ;
+					  
+DClass.    	 Def ::= "class" Id ":" Id "{" [Dfn] "}" ;
+			 
+terminator   Def "" ;
+terminator   Dfn "" ;
+
+ADecl.   	 Arg ::= Id ;
+
+separator    Arg "," ;
+
+SExp.        		Stm ::= Exp ";" ;
+SInit.       		Stm ::= Id "=" Exp ";" ;
+SReturn.     		Stm ::= "return" Exp ";" ;
+SWhile.     		Stm ::= "while" "(" Exp ")" "{" Stm "}" ;
+SIfElse.     		Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
+		
+terminator   		Stm "" ;
+
+EInt.    	 Exp13  ::= Integer ;
+EDouble. 	 Exp13  ::= Double ;
+EString. 	 Exp13  ::= String ;
+EId.     	 Exp13  ::= Id ; 
+
+EApp.   	 Exp13  ::= Id "(" [Exp] ")" ;
+SNewClass.   		Exp13 ::= "new" Id ;
+SClassMember.       Exp13 ::= Id "." Id "(" [Exp] ")" ;
+		
+ETimes. 	 Exp12  ::= Exp12 "*"  Exp13 ;
+EDiv.   	 Exp12  ::= Exp12 "/"  Exp13 ;
+EPlus.  	 Exp11  ::= Exp11 "+"  Exp12 ;
+EMinus. 	 Exp11  ::= Exp11 "-"  Exp12 ;
+ELt.    	 Exp9   ::= Exp9  "<"  Exp10 ;
+EGt.    	 Exp9   ::= Exp9  ">"  Exp10 ;
+EEq.    	 Exp8   ::= Exp8  "==" Exp9 ;
+ENEq.   	 Exp8   ::= Exp8  "!=" Exp9 ;
+EAss.   	 Exp2   ::= Exp8 "=" Exp2 ;
+
+coercions 	 Exp 13 ;
+
+separator 	 Exp "," ;
+
+token Id (letter (letter | digit | '_')*) ;
+
+separator nonempty Id "," ;
+
+comment "#" ;
+comment "//" ;
+comment "/*" "*/" ;

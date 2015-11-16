@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>310</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>_object: Loader
+--
+ClassPool *classPool;
+ConstantPool *constantPool;
+--
+Load()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>40</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>_object: Heap
+--
+		vector&lt;Instance *&gt; heap;
+--
+		addInstance()
+		getInstance()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>340</x>
+      <y>880</y>
+      <w>430</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>_object: InstructionADD
+--
+
+--
+		execute(){
+		Instance * a = heap-&gt;getInstance(dataStack-&gt;pop());
+			Instance * b = heap-&gt;getInstance(dataStack-&gt;pop());
+			Instance * c = a.add(b);	//return new instance after adding
+			if(c == NULL){
+				throw runtime_error("InstructionADD ADD error");
+			}
+			dataStack-&gt;push(heap-&gt;addInstance(c));
+			}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>480</y>
+      <w>210</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>_object: DataStack
+--
+stack&lt;int&gt; dataStack;
+(references to heap)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>380</y>
+      <w>210</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>_object: Frame
+--
+		int ebp;
+		int eip;
+		Function * frameFunction;
+		vector&lt;int&gt; variables;
+--
+void addEIP(int num);
+		int getEBP();
+		int getEIP();
+		int getVariable(int);
+		Function * getFunction();
+		void setEBP(int);
+		void setEIP(int);
+		void setVariable(int, int);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1060</x>
+      <y>460</y>
+      <w>210</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>_object: Function
+--
+		std::string name;
+		int c_parameters;
+		int c_locals;
+		vector&lt;int&gt; bc;
+--
+		std::string getName();
+		int getBC(int pos);
+		void call();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>420</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>_object: GarbageCollector
+--
+run(Heap * heap);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>150</y>
+      <w>220</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>_object: ConstantPool
+--
+map&lt;int, std::string&gt; constants;
+--
+		std::string getConstant(int);
+		void addConstant(int, std::string);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>260</y>
+      <w>270</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>_object: ClassPool
+--
+map&lt;std::string, Class* &gt; members;
+--
+		Class * getClass(const std::string &amp;name);
+		void addClass(Class * c);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>220</y>
+      <w>280</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>_object: Class
+--
+std::string name;
+		Class * parent;
+		map&lt;std::string, Function * &gt; functions;
+--
+		std::string getName();
+		Class * getParent();
+		void addFunction(Function * f);
+		Function * getFunction(std::string name);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>380</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>_object: CallStack
+--
+stack&lt;Frame *&gt; execStack; 
+--
+TODO</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>40</y>
+      <w>230</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>_object: Runtime
+--
+		Heap *heap;
+		ConstantPool *constantPool;
+		ClassPool *classPool;
+		Loader *loader;
+		CallStack *callStack;
+		DataStack *dataStack;
+		GarbageCollector *gc; 
+--
+		ConstantPool *getConstantPool();		
+		ClassPool *getClassPool();
+		void initialize(const std::string &amp;file);
+		bool run();
+		Instruction *fetch();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>710</x>
+      <y>420</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1010</x>
+      <y>500</y>
+      <w>70</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>290</y>
+      <w>60</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>750</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>_object: Instruction
+--
+		CallStack *callStack;
+		DataStack * dataStack;
+		Heap *heap;
+--
+		execute()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>840</y>
+      <w>340</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;320.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>880</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>_object: InstructionSUB
+--
+
+--
+		execute()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>100</x>
+      <y>840</y>
+      <w>40</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>230</x>
+      <y>890</y>
+      <w>20</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>270</x>
+      <y>890</y>
+      <w>20</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>310</x>
+      <y>890</y>
+      <w>20</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>60</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>80</y>
+      <w>170</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>150.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>100</y>
+      <w>170</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>150.0;190.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>130</y>
+      <w>170</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>150.0;290.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>160</y>
+      <w>170</w>
+      <h>360</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>150.0;340.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>80</x>
+      <y>250</y>
+      <w>440</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.&gt;
+&lt;&lt;fetch makes new instruction, which then executes&gt;&gt;</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;500.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>10</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>_object: Instance
+--
+		CallStack *callStack;
+		DataStack * dataStack;
+--
+		virtual Instance * add(Instance * b) = 0;
+		virtual Instance * sub(Instance * b) = 0;
+		virtual Instance * div(Instance * b) = 0;
+		virtual Instance * mul(Instance * b) = 0;
+		virtual Instance * clt(Instance * b) = 0;
+		virtual Instance * cgt(Instance * b) = 0;
+		virtual Instance * ceq(Instance * b) = 0;
+		virtual Instance * cneq(Instance * b) = 0;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1290</x>
+      <y>10</y>
+      <w>280</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>_object: InstanceINT
+--
+		int value;
+--
+		Instance * add(Instance * b);
+		Instance * sub(Instance * b);
+		Instance * div(Instance * b);
+		Instance * mul(Instance * b);
+		Instance * clt(Instance * b);
+		Instance * cgt(Instance * b);
+		Instance * ceq(Instance * b);
+		Instance * cneq(Instance * b);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1290</x>
+      <y>290</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>_object: InstanceSTRING
+--
+		string value;
+--
+		Instance * add(Instance * b);
+		Instance * sub(Instance * b);
+		Instance * div(Instance * b);
+		Instance * mul(Instance * b);
+		Instance * clt(Instance * b);
+		Instance * cgt(Instance * b);
+		Instance * ceq(Instance * b);
+		Instance * cneq(Instance * b);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>50</y>
+      <w>230</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>70</y>
+      <w>230</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1430</x>
+      <y>190</y>
+      <w>20</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1430</x>
+      <y>250</y>
+      <w>20</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>710</x>
+      <y>60</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1430</x>
+      <y>220</y>
+      <w>20</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+</diagram>

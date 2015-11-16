@@ -1,0 +1,30 @@
+
+class main : Base {
+	main(){
+	  i = 1 ;
+	  r = 2+1;
+	  r = i-1;
+	
+	  print("What string? ") ;
+	  s = read() ;
+	  h = new C_A;
+	  print(h.F_B(k,s)) ;
+	  return 1;
+	}
+}
+
+class C_A : Base {
+  F_A(param){
+	  i = 1 ;
+	  r = param+1 ;
+	  r = i-1 ;
+	  return r ;
+  }
+  F_B(k, s){
+	  i = 1+2-3;
+	  f = new C_A;
+	  r = f.F_A(4545);
+	  return r ;
+  }
+}
+

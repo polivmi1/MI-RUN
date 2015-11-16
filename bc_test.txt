@@ -1,0 +1,109 @@
+Parse Succesful!
+
+[Abstract Syntax]
+(PDefs [(DFun "main" [(ADecl "arg1"), (ADecl "arg2")] [(SExp [(EApp "N_printString" [(EString "What string? ")] )] ), (SInit "s" [(EApp "N_readString" [] )] ), (SExp [(EApp "N_printString" [(EString "How many times? ")] )] ), (SInit "k" [(EApp "N_readInt" [] )] ), (SExp [(EApp "N_printString" [(EApp "F_B" [(EId "k"), (EId "s")] )] )] ), (SReturn [(EInt 1)] )] ), (DClass "C_A" "Base" [(DFun "F_A" [] [(SInit "i" [(EInt 1)] ), (SInit "r" [(EId "s")] ), (SReturn [(EId "r")] )] )] ), (DFun "F_B" [(ADecl "k"), (ADecl "s")] [(SInit "i" [(EInt 1)] ), (SNewClass "f" "C_A" ), (SClassMember "f" [(EApp "F_A" [] )] ), (SInit "r" [(EId "s")] ), (SReturn [(EId "r")] )] )])
+
+[Linearized Tree]
+main (arg1, arg2)
+{
+  N_printString ("What string? ");
+  s  = N_readString ();
+  N_printString ("How many times? ");
+  k  = N_readInt ();
+  N_printString (F_B (k, s));
+  return 1;
+}
+class C_A  : Base
+{
+  F_A ()
+  {
+    i  = 1;
+    r  = s;
+    return r;
+  }
+}
+F_B (k, s)
+{
+  i  = 1;
+  f  = new C_A;
+  f  . F_A ();
+  r  = s;
+  return r;
+}
+
+
+BYTECODE
+<BEGIN MAIN> 0 0 0
+<BEGIN FUN> 0 0 0
+DFUN ID 0 0
+SIZE ID 0 1
+ArgumentDECL ID 0 2
+ArgumentDECL ID 0 3
+CALL ID 0 4
+STRING ID 0 5
+STORE ID 0 6
+CALL ID 0 7
+CALL ID 0 4
+STRING ID 0 8
+STORE ID 0 9
+CALL ID 0 10
+CALL ID 0 4
+CALL ID 0 11
+ArgumentPASS ID 0 9
+ArgumentPASS ID 0 6
+RET 0 0 0
+INT ID 0 12
+<END FUN> 0 0 0
+<BEGIN CLASS> 0 0 0
+DClass ID 0 13
+DClassParent ID 0 14
+<BEGIN FUN> 0 0 0
+DFUN ID 0 15
+SIZE ID 0 16
+STORE ID 0 17
+INT ID 0 12
+STORE ID 0 18
+ArgumentPASS ID 0 6
+RET 0 0 0
+ArgumentPASS ID 0 18
+<END FUN> 0 0 0
+<END CLASS> 0 0 0
+<BEGIN FUN> 0 0 0
+DFUN ID 0 11
+SIZE ID 0 1
+ArgumentDECL ID 0 9
+ArgumentDECL ID 0 6
+STORE ID 0 17
+INT ID 0 12
+STORE ID 0 19
+NEW ID 0 13
+MEMBER ID 0 19
+CALL ID 0 15
+STORE ID 0 18
+ArgumentPASS ID 0 6
+RET 0 0 0
+ArgumentPASS ID 0 18
+<END FUN> 0 0 0
+<END MAIN> 0 0 0
+************************************************
+CONSTANT POOL
+0 16
+1 12
+2 1
+Base 14
+C_A 13
+F_A 15
+F_B 11
+How many times?  8
+N_printString 4
+N_readInt 10
+N_readString 7
+What string?  5
+arg1 2
+arg2 3
+f 19
+i 17
+k 9
+main 0
+r 18
+s 6
