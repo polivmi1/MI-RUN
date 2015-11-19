@@ -128,11 +128,26 @@ void PrintAbsyn::visitDFun(DFun* p)
   int oldi = _i_;
   if (oldi > 0) render(_L_PAREN);
 
+  render("function");
   visitIdent(p->id_);
   render('(');
   if(p->listarg_) {_i_ = 0; p->listarg_->accept(this);}  render(')');
   render('{');
   if(p->liststm_) {_i_ = 0; p->liststm_->accept(this);}  render('}');
+
+  if (oldi > 0) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitDmem(Dmem*p) {} //abstract class
+
+void PrintAbsyn::visitDMember(DMember* p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(_L_PAREN);
+
+  visitIdent(p->id_);
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -151,7 +166,7 @@ void PrintAbsyn::visitDClass(DClass* p)
   render(':');
   visitIdent(p->id_2);
   render('{');
-  if(p->listdfn_) {_i_ = 0; p->listdfn_->accept(this);}  render('}');
+  if(p->listdmem_) {_i_ = 0; p->listdmem_->accept(this);}  if(p->listdfn_) {_i_ = 0; p->listdfn_->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -171,6 +186,13 @@ void PrintAbsyn::visitListDef(ListDef *listdef)
   {
     (*i)->accept(this);
     render("");
+  }
+}void PrintAbsyn::visitListDmem(ListDmem *listdmem)
+{
+  for (ListDmem::const_iterator i = listdmem->begin() ; i != listdmem->end() ; ++i)
+  {
+    (*i)->accept(this);
+    render(';');
   }
 }void PrintAbsyn::visitArg(Arg*p) {} //abstract class
 
@@ -214,6 +236,23 @@ void PrintAbsyn::visitSInit(SInit* p)
   if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->id_);
+  render('=');
+  _i_ = 0; p->exp_->accept(this);
+  render(';');
+
+  if (oldi > 0) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitSMemInit(SMemInit* p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(_L_PAREN);
+
+  visitIdent(p->id_1);
+  render('.');
+  visitIdent(p->id_2);
   render('=');
   _i_ = 0; p->exp_->accept(this);
   render(';');
@@ -335,6 +374,7 @@ void PrintAbsyn::visitEApp(EApp* p)
   int oldi = _i_;
   if (oldi > 13) render(_L_PAREN);
 
+  render("this.");
   visitIdent(p->id_);
   render('(');
   if(p->listexp_) {_i_ = 0; p->listexp_->accept(this);}  render(')');
@@ -367,6 +407,20 @@ void PrintAbsyn::visitSClassMember(SClassMember* p)
   visitIdent(p->id_2);
   render('(');
   if(p->listexp_) {_i_ = 0; p->listexp_->accept(this);}  render(')');
+
+  if (oldi > 13) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitSClassMemberVar(SClassMemberVar* p)
+{
+  int oldi = _i_;
+  if (oldi > 13) render(_L_PAREN);
+
+  visitIdent(p->id_1);
+  render('.');
+  visitIdent(p->id_2);
 
   if (oldi > 13) render(_R_PAREN);
 
@@ -595,6 +649,16 @@ void ShowAbsyn::visitDFun(DFun* p)
   bufAppend(' ');
   bufAppend(')');
 }
+void ShowAbsyn::visitDmem(Dmem* p) {} //abstract class
+
+void ShowAbsyn::visitDMember(DMember* p)
+{
+  bufAppend('(');
+  bufAppend("DMember");
+  bufAppend(' ');
+  visitIdent(p->id_);
+  bufAppend(')');
+}
 void ShowAbsyn::visitDef(Def* p) {} //abstract class
 
 void ShowAbsyn::visitDClass(DClass* p)
@@ -605,6 +669,10 @@ void ShowAbsyn::visitDClass(DClass* p)
   visitIdent(p->id_1);
   bufAppend(' ');
   visitIdent(p->id_2);
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->listdmem_)  p->listdmem_->accept(this);
+  bufAppend(']');
   bufAppend(' ');
   bufAppend('[');
   if (p->listdfn_)  p->listdfn_->accept(this);
@@ -627,6 +695,15 @@ void ShowAbsyn::visitListDfn(ListDfn *listdfn)
   {
     (*i)->accept(this);
     if (i != listdfn->end() - 1) bufAppend(", ");
+  }
+}
+
+void ShowAbsyn::visitListDmem(ListDmem *listdmem)
+{
+  for (ListDmem::const_iterator i = listdmem->begin() ; i != listdmem->end() ; ++i)
+  {
+    (*i)->accept(this);
+    if (i != listdmem->end() - 1) bufAppend(", ");
   }
 }
 
@@ -668,6 +745,21 @@ void ShowAbsyn::visitSInit(SInit* p)
   bufAppend("SInit");
   bufAppend(' ');
   visitIdent(p->id_);
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->exp_)  p->exp_->accept(this);
+  bufAppend(']');
+  bufAppend(' ');
+  bufAppend(')');
+}
+void ShowAbsyn::visitSMemInit(SMemInit* p)
+{
+  bufAppend('(');
+  bufAppend("SMemInit");
+  bufAppend(' ');
+  visitIdent(p->id_1);
+  bufAppend(' ');
+  visitIdent(p->id_2);
   bufAppend(' ');
   bufAppend('[');
   if (p->exp_)  p->exp_->accept(this);
@@ -792,6 +884,16 @@ void ShowAbsyn::visitSClassMember(SClassMember* p)
   if (p->listexp_)  p->listexp_->accept(this);
   bufAppend(']');
   bufAppend(' ');
+  bufAppend(')');
+}
+void ShowAbsyn::visitSClassMemberVar(SClassMemberVar* p)
+{
+  bufAppend('(');
+  bufAppend("SClassMemberVar");
+  bufAppend(' ');
+  visitIdent(p->id_1);
+  bufAppend(' ');
+  visitIdent(p->id_2);
   bufAppend(')');
 }
 void ShowAbsyn::visitETimes(ETimes* p)

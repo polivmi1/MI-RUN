@@ -26,6 +26,7 @@ class InstanceINT : public Instance{
 		Instance * cgt(Instance * b);
 		Instance * ceq(Instance * b);
 		Instance * cneq(Instance * b);
+		std::string getType();
 };
 
 #endif

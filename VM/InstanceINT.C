@@ -27,3 +27,7 @@ Instance * InstanceINT::ceq(Instance * b){
 Instance * InstanceINT::cneq(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
+std::string InstanceINT::getType(){
+	return "INT";
+}
+		

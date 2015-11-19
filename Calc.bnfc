@@ -1,11 +1,13 @@
 PDefs.   	 Program ::= [Def] ;
 
-DFun.    	 Dfn ::= Id "(" [Arg] ")" "{" [Stm] "}" ;
+DFun.    	 Dfn ::= "function" Id "(" [Arg] ")" "{" [Stm] "}" ;
+DMember.     Dmem ::= Id;
 					  
-DClass.    	 Def ::= "class" Id ":" Id "{" [Dfn] "}" ;
+DClass.    	 Def ::= "class" Id ":" Id "{" [Dmem][Dfn] "}" ;
 			 
 terminator   Def "" ;
 terminator   Dfn "" ;
+terminator   Dmem ";" ;
 
 ADecl.   	 Arg ::= Id ;
 
@@ -13,30 +15,32 @@ separator    Arg "," ;
 
 SExp.        		Stm ::= Exp ";" ;
 SInit.       		Stm ::= Id "=" Exp ";" ;
+SMemInit.       	Stm ::= Id "." Id "=" Exp ";" ;
 SReturn.     		Stm ::= "return" Exp ";" ;
 SWhile.     		Stm ::= "while" "(" Exp ")" "{" Stm "}" ;
 SIfElse.     		Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
 		
 terminator   		Stm "" ;
 
-EInt.    	 Exp13  ::= Integer ;
-EDouble. 	 Exp13  ::= Double ;
-EString. 	 Exp13  ::= String ;
-EId.     	 Exp13  ::= Id ; 
+EInt.    	 		Exp13  ::= Integer ;
+EDouble. 	 		Exp13  ::= Double ;
+EString. 	 		Exp13  ::= String ;
+EId.     	 		Exp13  ::= Id ; 
 
-EApp.   	 Exp13  ::= Id "(" [Exp] ")" ;
+EApp.   	 		Exp13  ::= "this." Id "(" [Exp] ")" ;
 SNewClass.   		Exp13 ::= "new" Id ;
 SClassMember.       Exp13 ::= Id "." Id "(" [Exp] ")" ;
+SClassMemberVar.    Exp13 ::= Id "." Id ;
 		
-ETimes. 	 Exp12  ::= Exp12 "*"  Exp13 ;
-EDiv.   	 Exp12  ::= Exp12 "/"  Exp13 ;
-EPlus.  	 Exp11  ::= Exp11 "+"  Exp12 ;
-EMinus. 	 Exp11  ::= Exp11 "-"  Exp12 ;
-ELt.    	 Exp9   ::= Exp9  "<"  Exp10 ;
-EGt.    	 Exp9   ::= Exp9  ">"  Exp10 ;
-EEq.    	 Exp8   ::= Exp8  "==" Exp9 ;
-ENEq.   	 Exp8   ::= Exp8  "!=" Exp9 ;
-EAss.   	 Exp2   ::= Exp8 "=" Exp2 ;
+ETimes. 	 		Exp12  ::= Exp12 "*"  Exp13 ;
+EDiv.   	 		Exp12  ::= Exp12 "/"  Exp13 ;
+EPlus.  	 		Exp11  ::= Exp11 "+"  Exp12 ;
+EMinus. 	 		Exp11  ::= Exp11 "-"  Exp12 ;
+ELt.    	 		Exp9   ::= Exp9  "<"  Exp10 ;
+EGt.    	 		Exp9   ::= Exp9  ">"  Exp10 ;
+EEq.    	 		Exp8   ::= Exp8  "==" Exp9 ;
+ENEq.   	 		Exp8   ::= Exp8  "!=" Exp9 ;
+EAss.   	 		Exp2   ::= Exp8 "=" Exp2 ;
 
 coercions 	 Exp 13 ;
 

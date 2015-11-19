@@ -22,16 +22,19 @@ typedef std::string Id;
 
 class Program;
 class Dfn;
+class Dmem;
 class Def;
 class Arg;
 class Stm;
 class Exp;
 class PDefs;
 class DFun;
+class DMember;
 class DClass;
 class ADecl;
 class SExp;
 class SInit;
+class SMemInit;
 class SReturn;
 class SWhile;
 class SIfElse;
@@ -42,6 +45,7 @@ class EId;
 class EApp;
 class SNewClass;
 class SClassMember;
+class SClassMemberVar;
 class ETimes;
 class EDiv;
 class EPlus;
@@ -53,6 +57,7 @@ class ENEq;
 class EAss;
 class ListDef;
 class ListDfn;
+class ListDmem;
 class ListArg;
 class ListStm;
 class ListExp;
@@ -66,16 +71,19 @@ public:
   virtual ~Visitor() {}
   virtual void visitProgram(Program *p) = 0;
   virtual void visitDfn(Dfn *p) = 0;
+  virtual void visitDmem(Dmem *p) = 0;
   virtual void visitDef(Def *p) = 0;
   virtual void visitArg(Arg *p) = 0;
   virtual void visitStm(Stm *p) = 0;
   virtual void visitExp(Exp *p) = 0;
   virtual void visitPDefs(PDefs *p) = 0;
   virtual void visitDFun(DFun *p) = 0;
+  virtual void visitDMember(DMember *p) = 0;
   virtual void visitDClass(DClass *p) = 0;
   virtual void visitADecl(ADecl *p) = 0;
   virtual void visitSExp(SExp *p) = 0;
   virtual void visitSInit(SInit *p) = 0;
+  virtual void visitSMemInit(SMemInit *p) = 0;
   virtual void visitSReturn(SReturn *p) = 0;
   virtual void visitSWhile(SWhile *p) = 0;
   virtual void visitSIfElse(SIfElse *p) = 0;
@@ -86,6 +94,7 @@ public:
   virtual void visitEApp(EApp *p) = 0;
   virtual void visitSNewClass(SNewClass *p) = 0;
   virtual void visitSClassMember(SClassMember *p) = 0;
+  virtual void visitSClassMemberVar(SClassMemberVar *p) = 0;
   virtual void visitETimes(ETimes *p) = 0;
   virtual void visitEDiv(EDiv *p) = 0;
   virtual void visitEPlus(EPlus *p) = 0;
@@ -97,6 +106,7 @@ public:
   virtual void visitEAss(EAss *p) = 0;
   virtual void visitListDef(ListDef *p) = 0;
   virtual void visitListDfn(ListDfn *p) = 0;
+  virtual void visitListDmem(ListDmem *p) = 0;
   virtual void visitListArg(ListArg *p) = 0;
   virtual void visitListStm(ListStm *p) = 0;
   virtual void visitListExp(ListExp *p) = 0;
@@ -134,6 +144,13 @@ class Dfn : public Visitable
 {
 public:
   virtual Dfn *clone() const = 0;
+
+};
+
+class Dmem : public Visitable
+{
+public:
+  virtual Dmem *clone() const = 0;
 
 };
 
@@ -197,16 +214,31 @@ public:
   void swap(DFun &);
 };
 
+class DMember : public Dmem
+{
+public:
+  Id id_;
+
+  DMember(const DMember &);
+  DMember &operator=(const DMember &);
+  DMember(Id p1);
+  ~DMember();
+  virtual void accept(Visitor *v);
+  virtual DMember *clone() const;
+  void swap(DMember &);
+};
+
 class DClass : public Def
 {
 public:
   Id id_1;
   Id id_2;
+  ListDmem *listdmem_;
   ListDfn *listdfn_;
 
   DClass(const DClass &);
   DClass &operator=(const DClass &);
-  DClass(Id p1, Id p2, ListDfn *p3);
+  DClass(Id p1, Id p2, ListDmem *p3, ListDfn *p4);
   ~DClass();
   virtual void accept(Visitor *v);
   virtual DClass *clone() const;
@@ -254,6 +286,22 @@ public:
   virtual void accept(Visitor *v);
   virtual SInit *clone() const;
   void swap(SInit &);
+};
+
+class SMemInit : public Stm
+{
+public:
+  Id id_1;
+  Id id_2;
+  Exp *exp_;
+
+  SMemInit(const SMemInit &);
+  SMemInit &operator=(const SMemInit &);
+  SMemInit(Id p1, Id p2, Exp *p3);
+  ~SMemInit();
+  virtual void accept(Visitor *v);
+  virtual SMemInit *clone() const;
+  void swap(SMemInit &);
 };
 
 class SReturn : public Stm
@@ -400,6 +448,21 @@ public:
   virtual void accept(Visitor *v);
   virtual SClassMember *clone() const;
   void swap(SClassMember &);
+};
+
+class SClassMemberVar : public Exp
+{
+public:
+  Id id_1;
+  Id id_2;
+
+  SClassMemberVar(const SClassMemberVar &);
+  SClassMemberVar &operator=(const SClassMemberVar &);
+  SClassMemberVar(Id p1, Id p2);
+  ~SClassMemberVar();
+  virtual void accept(Visitor *v);
+  virtual SClassMemberVar *clone() const;
+  void swap(SClassMemberVar &);
 };
 
 class ETimes : public Exp
@@ -551,6 +614,13 @@ class ListDfn : public Visitable, public std::vector<Dfn*>
 public:
   virtual void accept(Visitor *v);
   virtual ListDfn *clone() const;
+};
+
+class ListDmem : public Visitable, public std::vector<Dmem*>
+{
+public:
+  virtual void accept(Visitor *v);
+  virtual ListDmem *clone() const;
 };
 
 class ListArg : public Visitable, public std::vector<Arg*>

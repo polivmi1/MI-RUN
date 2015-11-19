@@ -100,12 +100,56 @@ DFun *DFun::clone() const
 
 
 
+/********************   DMember    ********************/
+DMember::DMember(Id p1)
+{
+  id_ = p1;
+
+}
+
+DMember::DMember(const DMember & other)
+{
+  id_ = other.id_;
+
+}
+
+DMember &DMember::operator=(const DMember & other)
+{
+  DMember tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void DMember::swap(DMember & other)
+{
+  std::swap(id_, other.id_);
+
+}
+
+DMember::~DMember()
+{
+
+}
+
+void DMember::accept(Visitor *v)
+{
+  v->visitDMember(this);
+}
+
+DMember *DMember::clone() const
+{
+  return new DMember(*this);
+}
+
+
+
 /********************   DClass    ********************/
-DClass::DClass(Id p1, Id p2, ListDfn *p3)
+DClass::DClass(Id p1, Id p2, ListDmem *p3, ListDfn *p4)
 {
   id_1 = p1;
   id_2 = p2;
-  listdfn_ = p3;
+  listdmem_ = p3;
+  listdfn_ = p4;
 
 }
 
@@ -113,6 +157,7 @@ DClass::DClass(const DClass & other)
 {
   id_1 = other.id_1;
   id_2 = other.id_2;
+  listdmem_ = other.listdmem_->clone();
   listdfn_ = other.listdfn_->clone();
 
 }
@@ -128,12 +173,14 @@ void DClass::swap(DClass & other)
 {
   std::swap(id_1, other.id_1);
   std::swap(id_2, other.id_2);
+  std::swap(listdmem_, other.listdmem_);
   std::swap(listdfn_, other.listdfn_);
 
 }
 
 DClass::~DClass()
 {
+  delete(listdmem_);
   delete(listdfn_);
 
 }
@@ -280,6 +327,56 @@ void SInit::accept(Visitor *v)
 SInit *SInit::clone() const
 {
   return new SInit(*this);
+}
+
+
+
+/********************   SMemInit    ********************/
+SMemInit::SMemInit(Id p1, Id p2, Exp *p3)
+{
+  id_1 = p1;
+  id_2 = p2;
+  exp_ = p3;
+
+}
+
+SMemInit::SMemInit(const SMemInit & other)
+{
+  id_1 = other.id_1;
+  id_2 = other.id_2;
+  exp_ = other.exp_->clone();
+
+}
+
+SMemInit &SMemInit::operator=(const SMemInit & other)
+{
+  SMemInit tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SMemInit::swap(SMemInit & other)
+{
+  std::swap(id_1, other.id_1);
+  std::swap(id_2, other.id_2);
+  std::swap(exp_, other.exp_);
+
+}
+
+SMemInit::~SMemInit()
+{
+  delete(exp_);
+
+}
+
+void SMemInit::accept(Visitor *v)
+{
+  v->visitSMemInit(this);
+}
+
+SMemInit *SMemInit::clone() const
+{
+  return new SMemInit(*this);
 }
 
 
@@ -736,6 +833,52 @@ void SClassMember::accept(Visitor *v)
 SClassMember *SClassMember::clone() const
 {
   return new SClassMember(*this);
+}
+
+
+
+/********************   SClassMemberVar    ********************/
+SClassMemberVar::SClassMemberVar(Id p1, Id p2)
+{
+  id_1 = p1;
+  id_2 = p2;
+
+}
+
+SClassMemberVar::SClassMemberVar(const SClassMemberVar & other)
+{
+  id_1 = other.id_1;
+  id_2 = other.id_2;
+
+}
+
+SClassMemberVar &SClassMemberVar::operator=(const SClassMemberVar & other)
+{
+  SClassMemberVar tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SClassMemberVar::swap(SClassMemberVar & other)
+{
+  std::swap(id_1, other.id_1);
+  std::swap(id_2, other.id_2);
+
+}
+
+SClassMemberVar::~SClassMemberVar()
+{
+
+}
+
+void SClassMemberVar::accept(Visitor *v)
+{
+  v->visitSClassMemberVar(this);
+}
+
+SClassMemberVar *SClassMemberVar::clone() const
+{
+  return new SClassMemberVar(*this);
 }
 
 
@@ -1198,6 +1341,20 @@ void ListDfn::accept(Visitor *v)
 ListDfn *ListDfn::clone() const
 {
   return new ListDfn(*this);
+}
+
+
+/********************   ListDmem    ********************/
+
+void ListDmem::accept(Visitor *v)
+{
+  v->visitListDmem(this);
+}
+
+
+ListDmem *ListDmem::clone() const
+{
+  return new ListDmem(*this);
 }
 
 

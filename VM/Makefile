@@ -1,7 +1,7 @@
 CC = g++
 CCFLAGS = -g -W -Wall
 
-OBJS = Runtime.o InstanceINT.o InstanceDOUBLE.o InstanceSTRING.o InstructionADD.o InstructionSUB.o InstructionDIV.o InstructionMUL.o InstructionCLT.o InstructionCGT.o InstructionRET.o InstructionCEQ.o InstructionCNEQ.o InstructionCJMP.o InstructionJMP.o InstructionNEW.o InstructionPUSHID.o InstructionPUSHINT.o InstructionPUSHDOUBLE.o InstructionPUSHSTRING.o InstructionSTORE.o InstructionCALL.o InstructionMCALL.o Loader.o Instruction.o Heap.o Instance.o Class.o Function.o ConstantPool.o ClassPool.o DataStack.o GarbageCollector.o Frame.o CallStack.o
+OBJS = Runtime.o  InstructionPUSHMEMBER.o InstructionSTOREMEMBER.o InstanceINT.o InstanceCLASS.o InstanceDOUBLE.o InstanceSTRING.o InstructionADD.o InstructionSUB.o InstructionDIV.o InstructionMUL.o InstructionCLT.o InstructionCGT.o InstructionRET.o InstructionCEQ.o InstructionCNEQ.o InstructionCJMP.o InstructionJMP.o InstructionNEW.o InstructionPUSHID.o InstructionPUSHINT.o InstructionPUSHDOUBLE.o InstructionPUSHSTRING.o InstructionSTORE.o InstructionCALL.o InstructionMCALL.o Loader.o Instruction.o Heap.o Instance.o Class.o Function.o ConstantPool.o ClassPool.o DataStack.o GarbageCollector.o Frame.o CallStack.o
 
 .PHONY: clean distclean
 
@@ -107,6 +107,12 @@ InstructionPUSHSTRING.o: InstructionPUSHSTRING.C InstructionPUSHSTRING.H Instruc
 InstructionSTORE.o: InstructionSTORE.C InstructionSTORE.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
 	${CC} ${CCFLAGS} -c InstructionSTORE.C
 	
+InstructionSTOREMEMBER.o: InstructionSTOREMEMBER.C InstructionSTOREMEMBER.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ConstantPool.H
+	${CC} ${CCFLAGS} -c InstructionSTOREMEMBER.C
+	
+InstructionPUSHMEMBER.o: InstructionPUSHMEMBER.C InstructionPUSHMEMBER.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ConstantPool.H
+	${CC} ${CCFLAGS} -c InstructionPUSHMEMBER.C
+	
 InstructionCALL.o: InstructionCALL.C InstructionCALL.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ClassPool.H ConstantPool.H
 	${CC} ${CCFLAGS} -c InstructionCALL.C
 	
@@ -115,6 +121,9 @@ InstructionMCALL.o: InstructionMCALL.C InstructionMCALL.H Instruction.H Instance
 
 InstanceINT.o: InstanceINT.C InstanceINT.H Instance.H
 	${CC} ${CCFLAGS} -c InstanceINT.C
+
+InstanceCLASS.o: InstanceCLASS.C InstanceCLASS.H Instance.H Class.H
+	${CC} ${CCFLAGS} -c InstanceCLASS.C
 
 InstanceDOUBLE.o: InstanceDOUBLE.C InstanceDOUBLE.H Instance.H ConstantPool.H
 	${CC} ${CCFLAGS} -c InstanceDOUBLE.C

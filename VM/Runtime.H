@@ -34,6 +34,8 @@
 #include "InstructionCALL.H"
 #include "InstructionMCALL.H"
 #include "InstructionRET.H"
+#include "InstructionPUSHMEMBER.H"
+#include "InstructionSTOREMEMBER.H"
 
 class Runtime{
 	private:

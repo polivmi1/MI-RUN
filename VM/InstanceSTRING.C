@@ -27,4 +27,10 @@ Instance * InstanceSTRING::ceq(Instance * b){
 Instance * InstanceSTRING::cneq(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
+std::string InstanceSTRING::getType(){
+	return "STRING";
+}
+		
+		
+		
 		

@@ -1,5 +1,5 @@
-#ifndef INSTANCESTRING_HEADER
-#define INSTANCESTRING_HEADER
+#ifndef INSTANCECLASS_HEADER
+#define INSTANCECLASS_HEADER
 
 #include <iostream>
 #include <cstdio>
@@ -9,17 +9,16 @@
 #include <stdexcept>
 
 #include "Instance.H"
-#include "ConstantPool.H"
+#include "Class.H"
 
 
-class InstanceSTRING : public Instance{
+class InstanceCLASS : public Instance{
 	private:
-		int ref; //not a real value, but pointer to constantpool
-		ConstantPool * constantPool;
+		std::vector<int> members;//position [i] is from instanceOf->members[string name]...return reference
+		Class * myClass;
 	public:
-		InstanceSTRING(int ref, ConstantPool * constantPool){
-			this->ref = ref;
-			this->constantPool = constantPool;
+		InstanceCLASS(Class * myClass){
+			this->myClass = myClass;
 		}
 		Instance * add(Instance * b);
 		Instance * sub(Instance * b);
@@ -30,6 +29,7 @@ class InstanceSTRING : public Instance{
 		Instance * ceq(Instance * b);
 		Instance * cneq(Instance * b);
 		std::string getType();
+		int getRefMember(std::string);
 };
 
 #endif

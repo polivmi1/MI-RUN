@@ -1,6 +1,6 @@
 CC = g++
 CCFLAGS = -g -W -Wall
-
+ 
 FLEX = flex
 FLEX_OPTS = -PCalc
 

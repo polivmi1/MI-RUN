@@ -14,7 +14,7 @@
 
 class Instance{
 	public:
-		//TODO
+		std::string type;
 		virtual Instance * add(Instance * b) = 0;
 		virtual Instance * sub(Instance * b) = 0;
 		virtual Instance * div(Instance * b) = 0;
@@ -23,6 +23,8 @@ class Instance{
 		virtual Instance * cgt(Instance * b) = 0;
 		virtual Instance * ceq(Instance * b) = 0;
 		virtual Instance * cneq(Instance * b) = 0;
+		virtual std::string getType() = 0;
+		virtual int getRefMember(std::string){return -1;};
 };
 
 #endif

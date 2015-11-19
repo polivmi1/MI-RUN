@@ -33,16 +33,20 @@ void render(char* s);
   void visitPDefs(PDefs *p);
   void visitDfn(Dfn *p); /* abstract class */
   void visitDFun(DFun *p);
+  void visitDmem(Dmem *p); /* abstract class */
+  void visitDMember(DMember *p);
   void visitDef(Def *p); /* abstract class */
   void visitDClass(DClass *p);
   void visitListDef(ListDef* p);
   void visitListDfn(ListDfn* p);
+  void visitListDmem(ListDmem* p);
   void visitArg(Arg *p); /* abstract class */
   void visitADecl(ADecl *p);
   void visitListArg(ListArg* p);
   void visitStm(Stm *p); /* abstract class */
   void visitSExp(SExp *p);
   void visitSInit(SInit *p);
+  void visitSMemInit(SMemInit *p);
   void visitSReturn(SReturn *p);
   void visitSWhile(SWhile *p);
   void visitSIfElse(SIfElse *p);
@@ -55,6 +59,7 @@ void render(char* s);
   void visitEApp(EApp *p);
   void visitSNewClass(SNewClass *p);
   void visitSClassMember(SClassMember *p);
+  void visitSClassMemberVar(SClassMemberVar *p);
   void visitETimes(ETimes *p);
   void visitEDiv(EDiv *p);
   void visitEPlus(EPlus *p);
@@ -144,16 +149,20 @@ class ShowAbsyn : public Visitor
   void visitPDefs(PDefs *p);
   void visitDfn(Dfn *p); /* abstract class */
   void visitDFun(DFun *p);
+  void visitDmem(Dmem *p); /* abstract class */
+  void visitDMember(DMember *p);
   void visitDef(Def *p); /* abstract class */
   void visitDClass(DClass *p);
   void visitListDef(ListDef* p);
   void visitListDfn(ListDfn* p);
+  void visitListDmem(ListDmem* p);
   void visitArg(Arg *p); /* abstract class */
   void visitADecl(ADecl *p);
   void visitListArg(ListArg* p);
   void visitStm(Stm *p); /* abstract class */
   void visitSExp(SExp *p);
   void visitSInit(SInit *p);
+  void visitSMemInit(SMemInit *p);
   void visitSReturn(SReturn *p);
   void visitSWhile(SWhile *p);
   void visitSIfElse(SIfElse *p);
@@ -166,6 +175,7 @@ class ShowAbsyn : public Visitor
   void visitEApp(EApp *p);
   void visitSNewClass(SNewClass *p);
   void visitSClassMember(SClassMember *p);
+  void visitSClassMemberVar(SClassMemberVar *p);
   void visitETimes(ETimes *p);
   void visitEDiv(EDiv *p);
   void visitEPlus(EPlus *p);

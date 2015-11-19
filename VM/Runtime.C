@@ -90,6 +90,12 @@ Instruction * Runtime::fetch(){
 		case 0x0A:
 			return new InstructionRET(callStack, dataStack, heap);
 			break;
+		case 0x30:
+			return new InstructionPUSHMEMBER(callStack, dataStack, heap, constantPool);//TODO
+			break;
+		case 0x31:
+			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//TODO
+			break;
 		default:
 			std::cout << "ERROR: UNKNOWN INSTRUCTION" << std::endl;
 			break;

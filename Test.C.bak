@@ -2,7 +2,7 @@
 /*                                                                          */
 /* This test will parse a file, print the abstract syntax tree, and then    */
 /* pretty-print the result.                                                 */
-/*                                                                           */
+/*                                                                          */
 /****************************************************************************/
 #include <stdio.h>
 #include "Parser.H"
@@ -40,7 +40,11 @@ int main(int argc, char ** argv)
     printf("BYTECODE\n");
 	
     Skeleton *a = new Skeleton();
-    a->print(parse_tree);
+    a->run(parse_tree);
+	
+    printf("SAVE BYTECODE\n");
+	a->writeToFile("VM/saved_data");
+	
     return 0;
   }
   return 1;

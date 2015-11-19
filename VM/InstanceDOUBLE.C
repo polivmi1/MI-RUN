@@ -27,3 +27,7 @@ Instance * InstanceDOUBLE::ceq(Instance * b){
 Instance * InstanceDOUBLE::cneq(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
+std::string InstanceDOUBLE::getType(){
+	return "DOUBLE";
+}
+	

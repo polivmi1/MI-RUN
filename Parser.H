@@ -7,9 +7,11 @@
 
 class Program;
 class Dfn;
+class Dmem;
 class Def;
 class ListDef;
 class ListDfn;
+class ListDmem;
 class Arg;
 class ListArg;
 class Stm;
@@ -26,9 +28,11 @@ typedef union
   char* string_;
   Program* program_;
   Dfn* dfn_;
+  Dmem* dmem_;
   Def* def_;
   ListDef* listdef_;
   ListDfn* listdfn_;
+  ListDmem* listdmem_;
   Arg* arg_;
   ListArg* listarg_;
   Stm* stm_;
@@ -42,12 +46,16 @@ Program* pProgram(FILE *inp);
 Program* pProgram(const char *str);
 Dfn* pDfn(FILE *inp);
 Dfn* pDfn(const char *str);
+Dmem* pDmem(FILE *inp);
+Dmem* pDmem(const char *str);
 Def* pDef(FILE *inp);
 Def* pDef(const char *str);
 ListDef* pListDef(FILE *inp);
 ListDef* pListDef(const char *str);
 ListDfn* pListDfn(FILE *inp);
 ListDfn* pListDfn(const char *str);
+ListDmem* pListDmem(FILE *inp);
+ListDmem* pListDmem(const char *str);
 Arg* pArg(FILE *inp);
 Arg* pArg(const char *str);
 ListArg* pListArg(FILE *inp);
@@ -90,9 +98,11 @@ ListId* pListId(const char *str);
 #define _SYMB_21 280
 #define _SYMB_22 281
 #define _SYMB_23 282
-#define _STRING_ 283
-#define _INTEGER_ 284
-#define _DOUBLE_ 285
+#define _SYMB_24 283
+#define _SYMB_25 284
+#define _STRING_ 285
+#define _INTEGER_ 286
+#define _DOUBLE_ 287
 
 extern YYSTYPE yylval;
 

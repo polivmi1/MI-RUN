@@ -26,3 +26,24 @@ Function * Class::getFunction(std::string name){
 	return it->second;	
 }
 
+
+void Class::addMember(std::string name){
+	std::map<std::string, int>::iterator it = members.find(name);
+	if(it != members.end()){
+		throw std::runtime_error("Member already declared " + name);
+	}
+	
+	members[name] = members.size();
+}
+
+
+int Class::getMember(std::string name){
+	std::map<std::string, int>::iterator it = members.find(name);
+	if(it != members.end()){
+		return it->second;
+	}
+	
+	return -1;
+}
+
+

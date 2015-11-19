@@ -20,6 +20,7 @@ namespace patch{
 void Skeleton::visitProgram(Program* t) {} //abstract class
 void Skeleton::visitDef(Def* t) {} //abstract class
 void Skeleton::visitDfn(Dfn* t) {} //abstract class
+void Skeleton::visitDmem(Dmem* t) {} //abstract class
 void Skeleton::visitArg(Arg* t) {} //abstract class
 void Skeleton::visitStm(Stm* t) {} //abstract class
 void Skeleton::visitExp(Exp* t) {} //abstract class
@@ -55,6 +56,16 @@ int Skeleton::getAddEnvPool(std::string name){
 	if(it == envPool.end()){
 		int pos = envPool.size();
 		envPool[name] = pos;
+		return pos;
+	}
+	return it->second;
+}
+
+int Skeleton::getAddMemPool(std::string name){
+	std::map<std::string, int>::iterator it = memPool.find(name);
+	if(it == memPool.end()){
+		int pos = memPool.size();
+		memPool[name] = pos;
 		return pos;
 	}
 	return it->second;
@@ -99,15 +110,28 @@ void Skeleton::visitDFun(DFun *dfun)
 
 }
 
+void Skeleton::visitDMember(DMember *dmember)
+{
+  /* Code For DMember Goes Here */
+
+  //visitId(dmember->id_);
+  int pos = getAddConstantPool(dmember->id_);
+  bc.addInt(pos);
+  std::cout << dmember->id_ << " : " << pos << std::endl;
+
+}
+
 void Skeleton::visitDClass(DClass *dclass)
 {
   /* Code For DClass Goes Here */
-
+  memPool.clear();  	
+	
   bc.addByte(0x1E);
   std::cout << "<BEGIN CLASS>" << std::endl; 
   bc.addInt(getAddConstantPool(dclass->id_1));
   bc.addInt(getAddConstantPool(dclass->id_2));
   std::cout << dclass->id_1 << " : " << dclass->id_2 << std::endl; 
+  dclass->listdmem_->accept(this);
   dclass->listdfn_->accept(this);
   bc.addByte(0x1F);
   std::cout << "<END CLASS>" << std::endl; 
@@ -132,6 +156,7 @@ void Skeleton::visitSExp(SExp *sexp)
 }
 
 
+
 void Skeleton::visitSInit(SInit *sinit)
 {
   /* Code For SInit Goes Here */
@@ -142,6 +167,22 @@ void Skeleton::visitSInit(SInit *sinit)
   visitId(sinit->id_);
   
 }
+
+
+void Skeleton::visitSMemInit(SMemInit *smeminit)
+{
+  /* Code For SMemInit Goes Here */
+
+  smeminit->exp_->accept(this);
+  //visitId(smeminit->id_1);
+  bc.addByte(0x31);
+  bc.addInt(getAddEnvPool(smeminit->id_1));
+  //visitId(smeminit->id_2);
+  bc.addInt(getAddConstantPool(smeminit->id_2));
+  std::cout << "[2]STORE to " << smeminit->id_1 << "." << smeminit->id_2 << std::endl;
+
+}
+
 
 void Skeleton::visitSReturn(SReturn *sreturn)
 {
@@ -250,6 +291,18 @@ void Skeleton::visitSClassMember(SClassMember *sclassmember)
   
 }
 
+void Skeleton::visitSClassMemberVar(SClassMemberVar *sclassmembervar)
+{
+  /* Code For SClassMemberVar Goes Here */
+
+  bc.addByte(0x30);
+  //visitId(sclassmembervar->id_1);
+  bc.addInt(getAddEnvPool(sclassmembervar->id_1));
+  //visitId(sclassmembervar->id_2);
+  bc.addInt(getAddConstantPool(sclassmembervar->id_2));
+  //std::cout << sclassmembervar->id_1 << "." << sclassmember->id_2 << std::endl;
+
+}
 
 
 void Skeleton::visitETimes(ETimes *etimes)
@@ -361,6 +414,15 @@ void Skeleton::visitListDfn(ListDfn* listdfn)
   std::cout<<"(SIZE): " << listdfn->size() << std::endl;
   
   for (ListDfn::iterator i = listdfn->begin() ; i != listdfn->end() ; ++i)
+  {
+    (*i)->accept(this);
+  }
+}
+
+void Skeleton::visitListDmem(ListDmem* listdmem)
+{
+  bc.addInt(listdmem->size());
+  for (ListDmem::iterator i = listdmem->begin() ; i != listdmem->end() ; ++i)
   {
     (*i)->accept(this);
   }

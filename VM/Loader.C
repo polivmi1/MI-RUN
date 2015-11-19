@@ -31,8 +31,8 @@ void Loader::load(const std::string &name){
   
   char c;
   int n_classes;
-  int n_functions;
-  int c_name, c_parent, f_name, n_param;
+  int n_functions, n_members;
+  int c_name, c_parent, f_name, n_param, m_name;
   
   //constant pool
   string str;
@@ -64,6 +64,13 @@ void Loader::load(const std::string &name){
 	c_parent = getInt(file);
 	
 	my_class = new Class(constantPool->getConstant(c_name), classPool->getClass(constantPool->getConstant(c_parent)));
+	n_members = getInt(file);
+	for(int j = 0; j < n_members; j++){
+		m_name = getInt(file);
+		my_class->addMember(constantPool->getConstant(m_name));
+		cout << "Member name: " << constantPool->getConstant(m_name) << endl;
+	}
+	
 	n_functions = getInt(file);
 	for(int j = 0; j < n_functions; j++){
 	  
