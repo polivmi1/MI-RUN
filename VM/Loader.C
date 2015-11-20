@@ -3,31 +3,34 @@
 using namespace std;
 
 int Loader::getInt(ifstream & file){
+
+	char buf[4];
+	file.read(buf, sizeof(buf) / sizeof(*buf));
+
+
 	int t, ret = 0;
-	char a;
-	file >> a;
-	t = (int)a;cout<<"T:" << t << endl;
+	char a = buf[0];
 	t = t<<24;
 	ret = ret | t;
-	file >> a;
-	t = (int)a;cout<<"T:" << t << endl;
+	a = buf[1];
 	t = t<<16;
 	ret = ret | t;
-	file >> a;
-	t = (int)a;cout<<"T:" << t << endl;
+	a = buf[2];
 	t = t<<8;
 	ret = ret | t;
-	file >> a;
-	t = (int)a;cout<<"T:" << t << endl;
+	a = buf[3];
 	ret = ret | t;
 	
 	return ret;
 }
 
 void Loader::load(const std::string &name){
+  ifstream fileC;
   ifstream file;
+  char buf[1];
   cout << "OPENING FILE: " << name << endl;
   file.open(name.c_str(), std::ios::in | std::ios::binary);
+  fileC.open((name + "C").c_str());
   
   char c;
   int n_classes;
@@ -40,12 +43,12 @@ void Loader::load(const std::string &name){
   int b;
   cout << "READING C_POOL" << endl;
   
-  file >> c_pool_size;
+  fileC >> c_pool_size;
   
   for(int i = 0; i < c_pool_size; i++){
-	getline(file, str);//\n
-	getline(file, str);
-	file >> b; 
+	getline(fileC, str);//\n
+	getline(fileC, str);
+	fileC >> b; 
 	constantPool->addConstant(b, str);
   }
 
@@ -59,7 +62,7 @@ void Loader::load(const std::string &name){
   
   for(int i = 0; i < n_classes; i++){
 	cout << "Class: " << i << endl;
-	file>>c;//begin class
+	file.read(buf, sizeof(buf) / sizeof(*buf));//begin class
 	c_name = getInt(file);
 	c_parent = getInt(file);
 	
@@ -81,12 +84,12 @@ void Loader::load(const std::string &name){
 		n_param = getInt(file);
 		cout << "n. of Parameters: " << n_param << endl;
 		vector<char> bc;
-		while(file>>c && c != 0x21){//till end fun
-			bc.push_back(c);
+		while(file.read(buf, sizeof(buf) / sizeof(*buf)) && buf[0] != 0x21){//till end fun
+			bc.push_back(buf[0]);
 		}
 	    my_class->addFunction(new Function(constantPool->getConstant(f_name), n_param, bc));
 	  }
-	file>>c;//end class
+	file.read(buf, sizeof(buf) / sizeof(*buf));//end class
 	classPool->addClass(my_class);
   } 
 }

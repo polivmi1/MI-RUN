@@ -1,7 +1,7 @@
 CC = g++
 CCFLAGS = -g -W -Wall
 
-OBJS = Runtime.o  InstructionPUSHMEMBER.o InstructionSTOREMEMBER.o InstanceINT.o InstanceCLASS.o InstanceDOUBLE.o InstanceSTRING.o InstructionADD.o InstructionSUB.o InstructionDIV.o InstructionMUL.o InstructionCLT.o InstructionCGT.o InstructionRET.o InstructionCEQ.o InstructionCNEQ.o InstructionCJMP.o InstructionJMP.o InstructionNEW.o InstructionPUSHID.o InstructionPUSHINT.o InstructionPUSHDOUBLE.o InstructionPUSHSTRING.o InstructionSTORE.o InstructionCALL.o InstructionMCALL.o Loader.o Instruction.o Heap.o Instance.o Class.o Function.o ConstantPool.o ClassPool.o DataStack.o GarbageCollector.o Frame.o CallStack.o
+OBJS = Runtime.o  InstructionPUSHMEMBER.o InstructionSTOREMEMBER.o InstanceINT.o InstanceCLASS.o InstanceDOUBLE.o InstanceSTRING.o InstructionADD.o InstructionSUB.o InstructionDIV.o InstructionMUL.o InstructionCLT.o InstructionCGT.o InstructionRET.o InstructionCEQ.o InstructionCNEQ.o InstructionCJMP.o InstructionBJMP.o InstructionFJMP.o InstructionNEW.o InstructionPUSHID.o InstructionPUSHINT.o InstructionPUSHDOUBLE.o InstructionPUSHSTRING.o InstructionSTORE.o InstructionCALL.o InstructionMCALL.o Loader.o Instruction.o Heap.o Instance.o Class.o Function.o ConstantPool.o ClassPool.o DataStack.o GarbageCollector.o Frame.o CallStack.o
 
 .PHONY: clean distclean
 
@@ -50,7 +50,7 @@ Function.o: Function.C Function.H
 Loader.o: Loader.C Loader.H ClassPool.H Class.H Function.H ConstantPool.H
 	${CC} ${CCFLAGS} -c Loader.C
 
-Runtime.o: Runtime.C Runtime.H Loader.H Heap.H ConstantPool.H ClassPool.H CallStack.H DataStack.H GarbageCollector.H Frame.H InstructionADD.H InstructionSUB.H InstructionDIV.H InstructionMUL.H InstructionCLT.H InstructionCGT.H InstructionCEQ.H InstructionCNEQ.H InstructionCJMP.H InstructionJMP.H InstructionNEW.H InstructionPUSHID.H InstructionPUSHINT.H InstructionPUSHDOUBLE.H InstructionPUSHSTRING.H InstructionSTORE.H InstructionCALL.H InstructionMCALL.H
+Runtime.o: Runtime.C Runtime.H Loader.H Heap.H ConstantPool.H ClassPool.H CallStack.H DataStack.H GarbageCollector.H Frame.H InstructionADD.H InstructionSUB.H InstructionDIV.H InstructionMUL.H InstructionCLT.H InstructionCGT.H InstructionCEQ.H InstructionCNEQ.H InstructionCJMP.H InstructionBJMP.H InstructionFJMP.H InstructionNEW.H InstructionPUSHID.H InstructionPUSHINT.H InstructionPUSHDOUBLE.H InstructionPUSHSTRING.H InstructionSTORE.H InstructionCALL.H InstructionMCALL.H
 	${CC} ${CCFLAGS} -c Runtime.C
 
 TestRun.o: TestRun.C Runtime.H
@@ -86,8 +86,11 @@ InstructionCNEQ.o: InstructionCNEQ.C InstructionCNEQ.H Instruction.H Instance.H 
 InstructionCJMP.o: InstructionCJMP.C InstructionCJMP.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
 	${CC} ${CCFLAGS} -c InstructionCJMP.C
 	
-InstructionJMP.o: InstructionJMP.C InstructionJMP.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
-	${CC} ${CCFLAGS} -c InstructionJMP.C
+InstructionBJMP.o: InstructionBJMP.C InstructionBJMP.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
+	${CC} ${CCFLAGS} -c InstructionBJMP.C
+	
+InstructionFJMP.o: InstructionFJMP.C InstructionFJMP.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
+	${CC} ${CCFLAGS} -c InstructionFJMP.C
 	
 InstructionNEW.o: InstructionNEW.C InstructionNEW.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
 	${CC} ${CCFLAGS} -c InstructionNEW.C
@@ -119,15 +122,15 @@ InstructionCALL.o: InstructionCALL.C InstructionCALL.H Instruction.H Instance.H 
 InstructionMCALL.o: InstructionMCALL.C InstructionMCALL.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ClassPool.H ConstantPool.H
 	${CC} ${CCFLAGS} -c InstructionMCALL.C
 
-InstanceINT.o: InstanceINT.C InstanceINT.H Instance.H
+InstanceINT.o: InstanceINT.C InstanceINT.H Instance.H InstanceDOUBLE.H
 	${CC} ${CCFLAGS} -c InstanceINT.C
 
 InstanceCLASS.o: InstanceCLASS.C InstanceCLASS.H Instance.H Class.H
 	${CC} ${CCFLAGS} -c InstanceCLASS.C
 
-InstanceDOUBLE.o: InstanceDOUBLE.C InstanceDOUBLE.H Instance.H ConstantPool.H
+InstanceDOUBLE.o: InstanceDOUBLE.C InstanceDOUBLE.H Instance.H InstanceINT.H
 	${CC} ${CCFLAGS} -c InstanceDOUBLE.C
 
-InstanceSTRING.o: InstanceSTRING.C InstanceSTRING.H Instance.H ConstantPool.H
+InstanceSTRING.o: InstanceSTRING.C InstanceSTRING.H Instance.H
 	${CC} ${CCFLAGS} -c InstanceSTRING.C
 	

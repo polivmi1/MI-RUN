@@ -1,5 +1,5 @@
-#ifndef INSTRUCTIONJMP_HEADER
-#define INSTRUCTIONJMP_HEADER
+#ifndef INSTRUCTIONFJMP_HEADER
+#define INSTRUCTIONFJMP_HEADER
 
 #include <iostream>
 #include <cstdio>
@@ -14,9 +14,9 @@
 #include "DataStack.H"
 #include "Heap.H"
 
-class InstructionJMP : public Instruction{
+class InstructionFJMP : public Instruction{
 	public:
-		InstructionJMP(CallStack *callStack, DataStack * dataStack, Heap * heap) : Instruction(callStack, dataStack, heap){
+		InstructionFJMP(CallStack *callStack, DataStack * dataStack, Heap * heap) : Instruction(callStack, dataStack, heap){
 			
 		}
 		

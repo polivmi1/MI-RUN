@@ -34,9 +34,6 @@ void Frame::setEIP(int i){
 	eip = i;
 }
 
-void Frame::setVariable(int i, int r){
-	if((unsigned int)i >= variables.size()){
-		variables.reserve((i+1)*10);
-	}
-	variables[i] = r;
+void Frame::setVariable(int i, int pValue){
+	variables.insert(variables.begin() + i, pValue);
 }

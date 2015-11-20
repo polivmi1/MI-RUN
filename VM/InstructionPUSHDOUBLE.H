@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstring>
 #include <map>
+#include <sstream>
 #include <stdexcept>
 
 #include "Instruction.H"

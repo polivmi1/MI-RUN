@@ -58,16 +58,19 @@ Instruction * Runtime::fetch(){
 			return new InstructionCNEQ(callStack, dataStack, heap);
 			break;	
 		case 0x0F:
-			return new InstructionCJMP(callStack, dataStack, heap);//TODO
+			return new InstructionCJMP(callStack, dataStack, heap);//CHECK
 			break;
 		case 0x10:
-			return new InstructionJMP(callStack, dataStack, heap);//TODO
+			return new InstructionBJMP(callStack, dataStack, heap);
+			break;
+		case 0x1C:
+			return new InstructionFJMP(callStack, dataStack, heap);
 			break;
 		case 0x05:
 			return new InstructionNEW(callStack, dataStack, heap);//TODO
 			break;
 		case 0x06:
-			return new InstructionPUSHID(callStack, dataStack, heap);//CHECK - LOAD
+			return new InstructionPUSHID(callStack, dataStack, heap);
 			break;
 		case 0x07:
 			return new InstructionPUSHINT(callStack, dataStack, heap);
@@ -79,7 +82,7 @@ Instruction * Runtime::fetch(){
 			return new InstructionPUSHSTRING(callStack, dataStack, heap, constantPool);//CHECK - REF to constantpool
 			break;
 		case 0x08:
-			return new InstructionSTORE(callStack, dataStack, heap);//CHECK - "reverse" of PUSHID
+			return new InstructionSTORE(callStack, dataStack, heap);
 			break;
 		case 0x09:
 			return new InstructionCALL(callStack, dataStack, heap, constantPool, classPool);//CHECK
@@ -91,10 +94,10 @@ Instruction * Runtime::fetch(){
 			return new InstructionRET(callStack, dataStack, heap);
 			break;
 		case 0x30:
-			return new InstructionPUSHMEMBER(callStack, dataStack, heap, constantPool);//TODO
+			return new InstructionPUSHMEMBER(callStack, dataStack, heap, constantPool);//TODO + check
 			break;
 		case 0x31:
-			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//TODO
+			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//TODO + check
 			break;
 		default:
 			std::cout << "ERROR: UNKNOWN INSTRUCTION" << std::endl;

@@ -26,17 +26,20 @@ void Skeleton::visitStm(Stm* t) {} //abstract class
 void Skeleton::visitExp(Exp* t) {} //abstract class
 
 void Skeleton::writeToFile(std::string name){
-  std::ofstream file;
-  file.open(name.c_str(), std::ios::out | std::ios::binary);
+  std::ofstream fileC;
+  fileC.open((name + "C").c_str());
   
   std::map<std::string, int>::iterator it = constantPool.begin();
-  file << constantPool.size() << std::endl; 
+  fileC << constantPool.size() << std::endl; 
   while(it != constantPool.end()){
-	file << it->first << "\n" << it->second << std::endl; 
+	fileC << it->first << "\n" << it->second << std::endl; 
 	it++;
   }
+  fileC.close();
+  
+  std::ofstream file;
+  file.open(name.c_str(), std::ios::out | std::ios::binary);
   bc.writeToFile(file);
-	
   file.close();
   
 }
@@ -56,16 +59,6 @@ int Skeleton::getAddEnvPool(std::string name){
 	if(it == envPool.end()){
 		int pos = envPool.size();
 		envPool[name] = pos;
-		return pos;
-	}
-	return it->second;
-}
-
-int Skeleton::getAddMemPool(std::string name){
-	std::map<std::string, int>::iterator it = memPool.find(name);
-	if(it == memPool.end()){
-		int pos = memPool.size();
-		memPool[name] = pos;
 		return pos;
 	}
 	return it->second;
@@ -99,6 +92,7 @@ void Skeleton::visitDFun(DFun *dfun)
   /* Code For DFun Goes Here */
 
   envPool.clear();  
+  bc.zeroCounter();
   
   std::cout << "<BEGIN FUN>" << std::endl; 
   bc.addInt(getAddConstantPool(dfun->id_));
@@ -124,7 +118,6 @@ void Skeleton::visitDMember(DMember *dmember)
 void Skeleton::visitDClass(DClass *dclass)
 {
   /* Code For DClass Goes Here */
-  memPool.clear();  	
 	
   bc.addByte(0x1E);
   std::cout << "<BEGIN CLASS>" << std::endl; 
@@ -197,9 +190,18 @@ void Skeleton::visitSReturn(SReturn *sreturn)
 void Skeleton::visitSWhile(SWhile *swhile)
 {
   /* Code For SWhile Goes Here */
-
-  swhile->exp_->accept(this);
+  swhile->exp_->accept(this);//pushed on stack
+  bc.addByte(0x0F);//CJMP
+  int beg = bc.getCounter();
+  bc.addInt(0);//how much if jump
+  
   swhile->stm_->accept(this);
+  bc.addByte(0x10);//DJMP  //FJMP = 0x1C 
+  int insertedBC = bc.getCounter() - beg;
+  bc.addInt(insertedBC);
+  
+  insertedBC += 4;
+  bc.changeIntByte(bc.size() - insertedBC, insertedBC);
 
 }
 
@@ -207,9 +209,28 @@ void Skeleton::visitSIfElse(SIfElse *sifelse)
 {
   /* Code For SIfElse Goes Here */
 
-  sifelse->exp_->accept(this);
-  sifelse->stm_1->accept(this);
-  sifelse->stm_2->accept(this);
+  sifelse->exp_->accept(this);//pushed on stack
+  
+  bc.addByte(0x07);
+  std::cout << "PUSHINT "; 
+  bc.addInt(0);
+  bc.addByte(0x0D);//CEQ -> 1 if jump
+  
+  bc.addByte(0x0F);//CJMP
+  int beg = bc.getCounter();
+  bc.addInt(0);//how much if jump
+ 
+	sifelse->stm_1->accept(this);
+  bc.addByte(0x1C);//FJMP = 0x1C 
+  int mid = bc.getCounter(); 
+  bc.addInt(0);//how much if jump 
+  int mid2 = bc.getCounter(); 
+	sifelse->stm_2->accept(this);
+  int second = bc.getCounter() - mid;
+  
+  bc.changeIntByte(bc.size() - second, second);
+  bc.changeIntByte(bc.size() - (mid2 - beg), mid2 - beg);
+  
 
 }
 
@@ -422,6 +443,7 @@ void Skeleton::visitListDfn(ListDfn* listdfn)
 void Skeleton::visitListDmem(ListDmem* listdmem)
 {
   bc.addInt(listdmem->size());
+  std::cout<<"(SIZE): " << listdmem->size() << std::endl;
   for (ListDmem::iterator i = listdmem->begin() ; i != listdmem->end() ; ++i)
   {
     (*i)->accept(this);

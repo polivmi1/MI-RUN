@@ -14,6 +14,7 @@
 
 class Instance{
 	public:
+		virtual ~Instance(){};
 		std::string type;
 		virtual Instance * add(Instance * b) = 0;
 		virtual Instance * sub(Instance * b) = 0;
@@ -24,7 +25,8 @@ class Instance{
 		virtual Instance * ceq(Instance * b) = 0;
 		virtual Instance * cneq(Instance * b) = 0;
 		virtual std::string getType() = 0;
-		virtual int getRefMember(std::string){return -1;};
+		virtual int getRefMember(std::string){return -1;}
+		virtual bool isTrue(){return false;}//FOR CJMP
 };
 
 #endif

@@ -9,6 +9,7 @@
 #include <stdexcept>
 
 #include "Instance.H"
+#include "InstanceDOUBLE.H"
 
 
 class InstanceINT : public Instance{
@@ -27,6 +28,8 @@ class InstanceINT : public Instance{
 		Instance * ceq(Instance * b);
 		Instance * cneq(Instance * b);
 		std::string getType();
+		int getValue(){return value;}
+		bool isTrue();
 };
 
 #endif

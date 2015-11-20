@@ -9,17 +9,14 @@
 #include <stdexcept>
 
 #include "Instance.H"
-#include "ConstantPool.H"
 
 
 class InstanceSTRING : public Instance{
 	private:
-		int ref; //not a real value, but pointer to constantpool
-		ConstantPool * constantPool;
+		std::string value; //not a real value, but pointer to constantpool
 	public:
-		InstanceSTRING(int ref, ConstantPool * constantPool){
-			this->ref = ref;
-			this->constantPool = constantPool;
+		InstanceSTRING(std::string value){
+			this->value = value;
 		}
 		Instance * add(Instance * b);
 		Instance * sub(Instance * b);

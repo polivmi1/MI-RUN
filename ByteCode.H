@@ -23,7 +23,7 @@ const std::string instructionTable[] = {"0",
 "CEQ",
 "CNEQ",
 "CJMP",
-"JMP",
+"BJMP",
 "ID",
 "INT",
 "CHAR",
@@ -35,7 +35,7 @@ const std::string instructionTable[] = {"0",
 "ClassName",
 "ClassParent",
 "DFUN",
-"---",
+"FJMP", 
 "SIZE",
 "<BEGIN CLASS>",
 "<END CLASS>",
@@ -45,8 +45,15 @@ const std::string instructionTable[] = {"0",
 
 class Bytecode{
 	private:
+		int counter;
 		std::vector<char> bc;
 			public:
+		//for while and if	
+		void zeroCounter(){counter = 0;}
+		int getCounter(){return counter;}
+		void changeByte(int pos, char b){bc[pos] = b;}
+		void changeIntByte(int pos, int b);
+		
 		void addByte(char b);
 		void addInt(int b);
 		unsigned int size(){return bc.size();};

@@ -7,7 +7,9 @@ void InstructionSTORE::execute(){
 	int param = f->getFunction()->getIntBC(f->getEIP());
 	f->addEIP(4); 
 	//store datastack.pop() to s
-	std::cout << "P"<<param << std::endl;
-	f->setVariable(param, dataStack->pop());
+	
+	int to = dataStack->pop();
+	
+	f->setVariable(param, to);
 }
 

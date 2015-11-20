@@ -6,19 +6,17 @@ class main : Base {
 	  r = 2+1;
 	  r = i-1;
 	
-	  this.print("What string? ") ;
-	  s = this.read() ;
-	  h = new C_A;
-	  this.print(h.F_B(k,s)) ;
+	//  this.print("What string? ") ;
+	//  s = this.read() ;
+	//  h = new C_A;
+	//  this.print(h.F_B(k,s)) ;
 	  return 1;
 	}
 }
 
 class C_A : Base {
   function F_A(param){
-	  i = 1 ;
 	  r = param+1 ;
-	  r = i-1 ;
 	  return r ;
   }
   function F_B(k, s){

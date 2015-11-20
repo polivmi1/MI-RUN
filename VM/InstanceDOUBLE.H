@@ -9,16 +9,14 @@
 #include <stdexcept>
 
 #include "Instance.H"
-#include "ConstantPool.H"
+#include "InstanceINT.H"
 
 class InstanceDOUBLE : public Instance{
 	private:
-		int ref;
-		ConstantPool * constantPool;
+		double value;
 	public:
-		InstanceDOUBLE(int ref, ConstantPool * constantPool){
-			this->ref = ref;
-			this->constantPool = constantPool;
+		InstanceDOUBLE(double value){
+			this->value = value;
 		}
 		Instance * add(Instance * b);
 		Instance * sub(Instance * b);
@@ -29,6 +27,8 @@ class InstanceDOUBLE : public Instance{
 		Instance * ceq(Instance * b);
 		Instance * cneq(Instance * b);
 		std::string getType();
+		double getValue(){return value;}
+		bool isTrue();
 };
 
 #endif

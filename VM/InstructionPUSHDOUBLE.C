@@ -5,6 +5,12 @@ void InstructionPUSHDOUBLE::execute(){
 	int param = f->getFunction()->getIntBC(f->getEIP());
 	f->addEIP(4); 
 	//param points to constantpool .... CHANGE to bytes and save string as bytes?
-	dataStack->push(heap->addInstance(new InstanceDOUBLE(param, constantPool)));
+	
+	std::stringstream ss;
+	ss << constantPool->getConstant(param);
+	double x;
+	ss >> x;
+	
+	dataStack->push(heap->addInstance(new InstanceDOUBLE(x)));
 }
 
