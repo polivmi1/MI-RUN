@@ -34,6 +34,7 @@ class DClass;
 class ADecl;
 class SExp;
 class SInit;
+class SMemInit;
 class SReturn;
 class SWhile;
 class SIfElse;
@@ -82,6 +83,7 @@ public:
   virtual void visitADecl(ADecl *p) = 0;
   virtual void visitSExp(SExp *p) = 0;
   virtual void visitSInit(SInit *p) = 0;
+  virtual void visitSMemInit(SMemInit *p) = 0;
   virtual void visitSReturn(SReturn *p) = 0;
   virtual void visitSWhile(SWhile *p) = 0;
   virtual void visitSIfElse(SIfElse *p) = 0;
@@ -284,6 +286,22 @@ public:
   virtual void accept(Visitor *v);
   virtual SInit *clone() const;
   void swap(SInit &);
+};
+
+class SMemInit : public Stm
+{
+public:
+  Id id_1;
+  Id id_2;
+  Exp *exp_;
+
+  SMemInit(const SMemInit &);
+  SMemInit &operator=(const SMemInit &);
+  SMemInit(Id p1, Id p2, Exp *p3);
+  ~SMemInit();
+  virtual void accept(Visitor *v);
+  virtual SMemInit *clone() const;
+  void swap(SMemInit &);
 };
 
 class SReturn : public Stm

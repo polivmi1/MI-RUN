@@ -16,7 +16,7 @@ class Class{
 		Class * parent;
 		std::map<std::string, Function * > functions;
 		std::map<std::string, int > members;	//int is the position in InstanceClass to the field, where is kept reference
-		//NEW sets all members to instance of INT(0)
+		//NEW sets all members to instance of INT(0) in InstanceCLASS
 	public:
 		Class(std::string name, Class * parent){
 			this->name = name;
@@ -27,6 +27,7 @@ class Class{
 		void addFunction(Function * f);
 		void addMember(std::string name);
 		int getMember(std::string name);
+		int getMemberSize(){return members.size();}
 		Function * getFunction(std::string name);
 };
 

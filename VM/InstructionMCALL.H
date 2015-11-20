@@ -16,6 +16,7 @@
 #include "ClassPool.H"
 #include "ConstantPool.H"
 #include "NativeFunctions.H"
+#include "InstanceCLASS.H"
 
 class InstructionMCALL : public Instruction{
 	private:

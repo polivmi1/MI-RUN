@@ -21,13 +21,11 @@ private:
 	Bytecode bc;
 	std::map<std::string, int> constantPool;
 	std::map<std::string, int> envPool;
-	std::map<std::string, int> memPool;
 
 public:
   void run(Visitable *v);
   int getAddConstantPool(std::string name);
   int getAddEnvPool(std::string name);
-  int getAddMemPool(std::string name);
   void writeToFile(std::string name);
 
   void visitProgram(Program* p);

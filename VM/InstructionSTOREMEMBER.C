@@ -12,14 +12,15 @@ void InstructionSTOREMEMBER::execute(){
 	//check if ref1 is type CLASS and if it is, look if it has variable with name varName and get his position[0....c_members]
 	Instance * inst = heap->getInstance(ref1);
 	if(inst->getType() != "CLASS")
-		throw std::runtime_error("Unsupported operation");
+		throw std::runtime_error("Accesing member of non-class");
 	int membersRef = inst->getRefMember(varName);
 	//we get the OLD instance of the right member from heap
-	Instance * instFinal = heap->getInstance(membersRef);
+	Instance * instOld = heap->getInstance(membersRef);
 
 	//we store the information instead of the old one
 	//delete???
-	
+	int ref = dataStack->pop();
+	inst->setRefMember(varName, ref);
 	
 	//dataStack->push(heap->addInstance(new InstanceDOUBLE(param, constantPool)));
 }

@@ -32,9 +32,15 @@ std::string InstanceCLASS::getType(){
 }
 
 int InstanceCLASS::getRefMember(std::string name){
-	int b = myClass->getMember(name);
+	int b = myClass->getMember(name); 
 	if(b == -1)
 		throw std::runtime_error("Member doesn't exist");
 	return members[b];
+}
+void InstanceCLASS::setRefMember(std::string name, int ref){
+	int b = myClass->getMember(name); 
+	if(b == -1)
+		throw std::runtime_error("Member doesn't exist");
+	members[b] = ref;
 }
 

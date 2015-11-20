@@ -331,6 +331,56 @@ SInit *SInit::clone() const
 
 
 
+/********************   SMemInit    ********************/
+SMemInit::SMemInit(Id p1, Id p2, Exp *p3)
+{
+  id_1 = p1;
+  id_2 = p2;
+  exp_ = p3;
+
+}
+
+SMemInit::SMemInit(const SMemInit & other)
+{
+  id_1 = other.id_1;
+  id_2 = other.id_2;
+  exp_ = other.exp_->clone();
+
+}
+
+SMemInit &SMemInit::operator=(const SMemInit & other)
+{
+  SMemInit tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SMemInit::swap(SMemInit & other)
+{
+  std::swap(id_1, other.id_1);
+  std::swap(id_2, other.id_2);
+  std::swap(exp_, other.exp_);
+
+}
+
+SMemInit::~SMemInit()
+{
+  delete(exp_);
+
+}
+
+void SMemInit::accept(Visitor *v)
+{
+  v->visitSMemInit(this);
+}
+
+SMemInit *SMemInit::clone() const
+{
+  return new SMemInit(*this);
+}
+
+
+
 /********************   SReturn    ********************/
 SReturn::SReturn(Exp *p1)
 {

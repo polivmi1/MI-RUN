@@ -7,7 +7,10 @@ void InstructionCJMP::execute(){
 	
 	Instance * a = heap->getInstance(dataStack->pop());
 	
-	if(a->isTrue())
+	//std::cout<< a->toString() << std::endl;
+	if(a->isTrue()){
+		std::cout<<"CJUMPING"<<std::endl;
 		f->addEIP(param);
+	}
 }
 

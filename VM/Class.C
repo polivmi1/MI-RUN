@@ -33,7 +33,8 @@ void Class::addMember(std::string name){
 		throw std::runtime_error("Member already declared " + name);
 	}
 	
-	members[name] = members.size();
+	members[name] = members.size() - 1;
+
 }
 
 

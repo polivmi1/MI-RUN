@@ -1,12 +1,8 @@
-11
+6
 Base
 1
-C_A
-8
-F_A
-9
-F_B
-10
+X
+4
 m_1
 2
 m_2
@@ -15,9 +11,3 @@ main
 0
 print
 5
-readDouble
-4
-readInt
-7
-readString
-6

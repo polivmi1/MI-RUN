@@ -2,36 +2,23 @@ class main : Base {
 	m_1;
 	m_2;
 	function main(){
-	  i = 115;
 	  
-	  g = this.readDouble();
-	  this.print(g);
-	  g = this.readString();
-	  this.print(g);
+	  x = new X;
+	  this.print(x.m_1);
+	  x.m_1 = 3;
+	  this.print(x.m_1);
+	  x.m_2 = 4;
+	  this.print(x.m_2);
 	  
-	  r = i-1;
-	  this.print(r);
-	  i = this.readInt();
-	  r = i-1;
-	  this.print(r);
-	  
-	//  s = this.read() ;
-	//  h = new C_A;
-	//  this.print(h.F_B(k,s)) ;
 	  return 1;
 	}
 }
 
-class C_A : Base {
-  function F_A(param){
-	  r = param+1 ;
-	  return r ;
-  }
-  function F_B(k, s){
-	  i = 1+2-3;
-	  f = new C_A;
-	  r = f.F_A(4545);
-	  return r ;
-  }
+class X : Base {
+	m_1;
+	m_2;
+	function main(){
+	  i = 5;
+	  return 1;
+	}
 }
-

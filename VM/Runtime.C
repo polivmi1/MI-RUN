@@ -62,7 +62,7 @@ Instruction * Runtime::fetch(){
 			return new InstructionCNEQ(callStack, dataStack, heap);
 			break;	
 		case 0x0F:
-			return new InstructionCJMP(callStack, dataStack, heap);//CHECK
+			return new InstructionCJMP(callStack, dataStack, heap);
 			break;
 		case 0x10:
 			return new InstructionBJMP(callStack, dataStack, heap);
@@ -71,7 +71,7 @@ Instruction * Runtime::fetch(){
 			return new InstructionFJMP(callStack, dataStack, heap);
 			break;
 		case 0x05:
-			return new InstructionNEW(callStack, dataStack, heap);//TODO
+			return new InstructionNEW(callStack, dataStack, heap, constantPool, classPool);
 			break;
 		case 0x06:
 			return new InstructionPUSHID(callStack, dataStack, heap);
@@ -80,30 +80,38 @@ Instruction * Runtime::fetch(){
 			return new InstructionPUSHINT(callStack, dataStack, heap);
 			break;
 		case 0x17:
-			return new InstructionPUSHDOUBLE(callStack, dataStack, heap, constantPool);//CHECK - REF to constantpool
+			return new InstructionPUSHDOUBLE(callStack, dataStack, heap, constantPool);
 			break;
 		case 0x18:
-			return new InstructionPUSHSTRING(callStack, dataStack, heap, constantPool);//CHECK - REF to constantpool
+			return new InstructionPUSHSTRING(callStack, dataStack, heap, constantPool);
 			break;
 		case 0x08:
 			return new InstructionSTORE(callStack, dataStack, heap);
 			break;
 		case 0x09:
-			return new InstructionCALL(callStack, dataStack, heap, constantPool, classPool);//CHECK
+			return new InstructionCALL(callStack, dataStack, heap, constantPool, classPool);
 			break;
 		case 0x16:
-			return new InstructionMCALL(callStack, dataStack, heap, constantPool, classPool);//CHECK
+			return new InstructionMCALL(callStack, dataStack, heap, constantPool, classPool);
 			break;
 		case 0x0A:
 			return new InstructionRET(callStack, dataStack, heap);
 			break;
 		case 0x30:
-			return new InstructionPUSHMEMBER(callStack, dataStack, heap, constantPool);//TODO + check
+			return new InstructionPUSHMEMBER(callStack, dataStack, heap, constantPool);
 			break;
 		case 0x31:
-			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//TODO + check
+			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//CHECK DELETE OLD VALUE
 			break;
-		default:
+		default:		
+			std::cout << instruction << std::endl;
+			std::cout << f->getFunction()->getBC(f->getEIP()+1) << std::endl;
+			std::cout << f->getFunction()->getBC(f->getEIP()+2) << std::endl;
+			std::cout << f->getFunction()->getBC(f->getEIP()+3) << std::endl;
+			std::cout << f->getFunction()->getBC(f->getEIP()+4) << std::endl;
+			std::cout << f->getFunction()->getBC(f->getEIP()+5) << std::endl;
+			std::cout << f->getFunction()->getBC(f->getEIP()+6) << std::endl;
+			std::cout << f->getFunction()->getBC(f->getEIP()+7) << std::endl;
 			std::cout << "ERROR: UNKNOWN INSTRUCTION" << std::endl;
 			break;
 	}

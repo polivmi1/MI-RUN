@@ -17,8 +17,8 @@ SExp.        		Stm ::= Exp ";" ;
 SInit.       		Stm ::= Id "=" Exp ";" ;
 SMemInit.       	Stm ::= Id "." Id "=" Exp ";" ;
 SReturn.     		Stm ::= "return" Exp ";" ;
-SWhile.     		Stm ::= "while" "(" Exp ")" "{" Stm "}" ;
-SIfElse.     		Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
+SWhile.     		Stm ::= "while" "(" Exp ")" "{" [Stm] "}" ;
+SIfElse.     		Stm ::= "if" "(" Exp ")" "{" [Stm] "}" "else" "{" [Stm] "}";
 		
 terminator   		Stm "" ;
 

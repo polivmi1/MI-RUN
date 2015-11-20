@@ -128,6 +128,7 @@ void PrintAbsyn::visitDFun(DFun* p)
   int oldi = _i_;
   if (oldi > 0) render(_L_PAREN);
 
+  render("function");
   visitIdent(p->id_);
   render('(');
   if(p->listarg_) {_i_ = 0; p->listarg_->accept(this);}  render(')');

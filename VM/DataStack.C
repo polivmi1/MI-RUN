@@ -5,6 +5,8 @@ int DataStack::size(){
 }
 
 int DataStack::pop(){
+	if(dataStack.size() == 0)
+		std::cout << "ERROR:: DATASTACK IS EMPTY" << std::endl;  
 	int ret = dataStack.top();
 	dataStack.pop();
 	return ret;

@@ -92,7 +92,7 @@ InstructionBJMP.o: InstructionBJMP.C InstructionBJMP.H Instruction.H Instance.H 
 InstructionFJMP.o: InstructionFJMP.C InstructionFJMP.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
 	${CC} ${CCFLAGS} -c InstructionFJMP.C
 	
-InstructionNEW.o: InstructionNEW.C InstructionNEW.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
+InstructionNEW.o: InstructionNEW.C InstructionNEW.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ConstantPool.H ClassPool.H InstanceCLASS.H
 	${CC} ${CCFLAGS} -c InstructionNEW.C
 	
 InstructionPUSHID.o: InstructionPUSHID.C InstructionPUSHID.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
@@ -119,13 +119,13 @@ InstructionPUSHMEMBER.o: InstructionPUSHMEMBER.C InstructionPUSHMEMBER.H Instruc
 InstructionCALL.o: InstructionCALL.C InstructionCALL.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ClassPool.H ConstantPool.H NativeFunctions.H
 	${CC} ${CCFLAGS} -c InstructionCALL.C
 	
-InstructionMCALL.o: InstructionMCALL.C InstructionMCALL.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ClassPool.H ConstantPool.H NativeFunctions.H
+InstructionMCALL.o: InstructionMCALL.C InstructionMCALL.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ClassPool.H ConstantPool.H NativeFunctions.H InstanceCLASS.H
 	${CC} ${CCFLAGS} -c InstructionMCALL.C
 
 InstanceINT.o: InstanceINT.C InstanceINT.H Instance.H InstanceDOUBLE.H
 	${CC} ${CCFLAGS} -c InstanceINT.C
 
-InstanceCLASS.o: InstanceCLASS.C InstanceCLASS.H Instance.H Class.H
+InstanceCLASS.o: InstanceCLASS.C InstanceCLASS.H Instance.H Class.H Heap.H InstanceINT.H
 	${CC} ${CCFLAGS} -c InstanceCLASS.C
 
 InstanceDOUBLE.o: InstanceDOUBLE.C InstanceDOUBLE.H Instance.H InstanceINT.H

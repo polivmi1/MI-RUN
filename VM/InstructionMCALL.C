@@ -4,11 +4,17 @@ void InstructionMCALL::execute(){
 	Frame * f = callStack->top();
 	int paramFunc = f->getFunction()->getIntBC(f->getEIP());
 	f->addEIP(4); 
-	int paramClass = f->getFunction()->getIntBC(f->getEIP());
+	int param = f->getFunction()->getIntBC(f->getEIP());
+	int ref = f->getVariable(param);
 	f->addEIP(4); 
 	
 	std::string f_name = constantPool->getConstant(paramFunc); 
-	std::string c_name = constantPool->getConstant(paramClass);
+	Instance * a = heap->getInstance(ref);
+	if(a->getType() != "CLASS"){
+		throw std::runtime_error("Accesing member of non-class");		
+	}
+	InstanceCLASS * t = static_cast<InstanceCLASS*>(a);
+	std::string c_name = t->getClass()->getName();
 	
 	if(NativeFunctions::callNative(f_name, dataStack, heap))//try to call native function
 		return;

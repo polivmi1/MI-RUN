@@ -27,6 +27,7 @@ class Instance{
 		virtual std::string getType() = 0;
 		virtual std::string toString() = 0;
 		virtual int getRefMember(std::string){return -1;}
+		virtual void setRefMember(std::string, int){return;}
 		virtual bool isTrue(){return false;}//FOR CJMP
 };
 
