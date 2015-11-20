@@ -6,6 +6,6 @@ void InstructionPUSHSTRING::execute(){
 	f->addEIP(4); 
 	//param points to constantpool .... CHANGE to bytes and save string as bytes?	
 		
-	dataStack->push(heap->addInstance(new InstanceSTRING(constantPool->getConstant(param))));
+	dataStack->push(heap->addInstanceSTRING(constantPool->getConstant(param)));
 }
 

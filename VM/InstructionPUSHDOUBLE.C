@@ -11,6 +11,6 @@ void InstructionPUSHDOUBLE::execute(){
 	double x;
 	ss >> x;
 	
-	dataStack->push(heap->addInstance(new InstanceDOUBLE(x)));
+	dataStack->push(heap->addInstanceDOUBLE(x));
 }
 

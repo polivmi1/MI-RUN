@@ -1,30 +1,30 @@
 #include "InstanceCLASS.H"
 
 
-Instance * InstanceCLASS::add(Instance * b){
+int InstanceCLASS::add(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
 
-Instance * InstanceCLASS::sub(Instance * b){
+int InstanceCLASS::sub(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
 
-Instance * InstanceCLASS::div(Instance * b){
+int InstanceCLASS::div(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceCLASS::mul(Instance * b){
+int InstanceCLASS::mul(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceCLASS::clt(Instance * b){
+int InstanceCLASS::clt(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceCLASS::cgt(Instance * b){
+int InstanceCLASS::cgt(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceCLASS::ceq(Instance * b){
+int InstanceCLASS::ceq(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceCLASS::cneq(Instance * b){
+int InstanceCLASS::cneq(Instance * b){
 	throw std::runtime_error("Unsupported operation");
 }
 std::string InstanceCLASS::getType(){

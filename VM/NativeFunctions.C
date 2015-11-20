@@ -21,19 +21,16 @@ bool NativeFunctions::callNative(std::string name, DataStack *dataStack, Heap *h
 	}else if(name == "readInt"){
 		int x;
 		std::cin >> x;
-		Instance * a = new InstanceINT(x);
-		dataStack->push(heap->addInstance(a));		
+		dataStack->push(heap->addInstanceINT(x));		
 	}else if(name == "readDouble"){
 		double x;
 		std::cin >> x;
-		Instance * a = new InstanceDOUBLE(x);
-		dataStack->push(heap->addInstance(a));		
+		dataStack->push(heap->addInstanceDOUBLE(x));		
 	
 	}else if(name == "readString"){
 		std::string x;
 		std::cin >> x;
-		Instance * a = new InstanceSTRING(x);
-		dataStack->push(heap->addInstance(a));		
+		dataStack->push(heap->addInstanceSTRING(x));		
 	}
 		
 	return true;

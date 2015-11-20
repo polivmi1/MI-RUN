@@ -1,109 +1,108 @@
 #include "InstanceINT.H"
 
 
-Instance * InstanceINT::add(Instance * b){
+int InstanceINT::add(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
-		return new InstanceINT(getValue() + t->getValue());
+		return heap->addInstanceINT(getValue() + t->getValue());
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
-		return new InstanceDOUBLE(getValue() + t->getValue());
+		return heap->addInstanceDOUBLE(getValue() + t->getValue());
 	}else
 		throw std::runtime_error("Unsupported operation");
 }
 
-Instance * InstanceINT::sub(Instance * b){
+int InstanceINT::sub(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
-		return new InstanceINT(getValue() - t->getValue());
+		return heap->addInstanceINT(getValue() - t->getValue());
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
-		return new InstanceDOUBLE(getValue() - t->getValue());
+		return heap->addInstanceDOUBLE(getValue() - t->getValue());
 	}else
 		throw std::runtime_error("Unsupported operation");
 }
-
-Instance * InstanceINT::div(Instance * b){
+int InstanceINT::div(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
-		return new InstanceDOUBLE((double)getValue() / t->getValue());
+		return heap->addInstanceDOUBLE((double)getValue() / t->getValue());
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
-		return new InstanceDOUBLE((double)getValue() / t->getValue());
+		return heap->addInstanceDOUBLE((double)getValue() / t->getValue());
 	}else
 		throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceINT::mul(Instance * b){
+int InstanceINT::mul(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
-		return new InstanceINT(getValue() * t->getValue());
+		return heap->addInstanceINT(getValue() * t->getValue());
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
-		return new InstanceDOUBLE((double)getValue() * t->getValue());
+		return heap->addInstanceDOUBLE((double)getValue() * t->getValue());
 	}else
 		throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceINT::clt(Instance * b){
+int InstanceINT::clt(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
 		if(getValue() < t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
 		if(getValue() < t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else
 		throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceINT::cgt(Instance * b){
+int InstanceINT::cgt(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
 		if(getValue() > t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
 		if(getValue() > t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else
 		throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceINT::ceq(Instance * b){
+int InstanceINT::ceq(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
 		if(getValue() == t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
 		if(getValue() == t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else
 		throw std::runtime_error("Unsupported operation");
 }
-Instance * InstanceINT::cneq(Instance * b){
+int InstanceINT::cneq(Instance * b){
 	if(b->getType() == "INT"){
 		InstanceINT * t = static_cast<InstanceINT*>(b);
 		if(getValue() != t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else if(b->getType() == "DOUBLE"){
 		InstanceDOUBLE * t = static_cast<InstanceDOUBLE*>(b);
 		if(getValue() != t->getValue())
-			return new InstanceINT(1);
+			return heap->addInstanceINT(1);
 		else
-			return new InstanceINT(0);
+			return heap->addInstanceINT(0);
 	}else
 		throw std::runtime_error("Unsupported operation");
 }

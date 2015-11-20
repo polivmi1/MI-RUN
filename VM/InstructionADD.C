@@ -3,10 +3,10 @@
 void InstructionADD::execute(){
 	Instance * a = heap->getInstance(dataStack->pop());
 	Instance * b = heap->getInstance(dataStack->pop());
-	Instance * c = a->add(b);	//return new instance after adding
-	if(c == NULL){
+	int c = a->add(b);	//return new instance after adding
+	if(c == -1){
 		throw std::runtime_error("InstructionADD ADD error");
 	}
-	dataStack->push(heap->addInstance(c));	//heap returns a reference, which we push on dataStack
+	dataStack->push(c);	//heap returns a reference, which we push on dataStack
 }
 

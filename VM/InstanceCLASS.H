@@ -11,29 +11,26 @@
 #include "Instance.H"
 #include "InstanceINT.H"
 #include "Class.H"
-#include "Heap.H"
 
 
 class InstanceCLASS : public Instance{
 	private:
-		std::vector<int> members;//position [i] is from instanceOf->members[string name]...return reference
 		Class * myClass;
 	public:
-		InstanceCLASS(Class * myClass, Heap * heap){
+		int* members;//position [i] is from instanceOf->members[string name]...return reference
+		InstanceCLASS(Class * myClass){
 			this->myClass = myClass;
 			int n_members = myClass->getMemberSize();
-			for(int i = 0; i < n_members; i++){
-				members.insert(members.begin() + i, heap->addInstance(new InstanceINT(0)));
-			}
+			members = new int[n_members];
 		} 
-		Instance * add(Instance * b);
-		Instance * sub(Instance * b);
-		Instance * div(Instance * b);
-		Instance * mul(Instance * b);
-		Instance * clt(Instance * b);
-		Instance * cgt(Instance * b);
-		Instance * ceq(Instance * b);
-		Instance * cneq(Instance * b);
+		int  add(Instance * b);
+		int  sub(Instance * b);
+		int  div(Instance * b);
+		int  mul(Instance * b);
+		int  clt(Instance * b);
+		int  cgt(Instance * b);
+		int  ceq(Instance * b);
+		int  cneq(Instance * b);
 		std::string getType();
 		int getRefMember(std::string);
 		void setRefMember(std::string name, int ref);

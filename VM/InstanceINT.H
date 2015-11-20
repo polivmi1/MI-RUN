@@ -11,23 +11,27 @@
 
 #include "Instance.H"
 #include "InstanceDOUBLE.H"
+#include "Heap.H"
 
+class Heap;
 
 class InstanceINT : public Instance{
 	private:
 		int value;
+		Heap * heap;
 	public:
-		InstanceINT(int value){
+		InstanceINT(int value, Heap * heap){
 			this->value = value;
+			this->heap = heap;
 		}
-		Instance * add(Instance * b);
-		Instance * sub(Instance * b);
-		Instance * div(Instance * b);
-		Instance * mul(Instance * b);
-		Instance * clt(Instance * b);
-		Instance * cgt(Instance * b);
-		Instance * ceq(Instance * b);
-		Instance * cneq(Instance * b);
+		int  add(Instance * b);
+		int  sub(Instance * b);
+		int  div(Instance * b);
+		int  mul(Instance * b);
+		int  clt(Instance * b);
+		int  cgt(Instance * b);
+		int  ceq(Instance * b);
+		int  cneq(Instance * b);
 		std::string getType();
 		int getValue(){return value;}
 		bool isTrue();

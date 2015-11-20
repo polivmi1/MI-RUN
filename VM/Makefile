@@ -38,7 +38,7 @@ ConstantPool.o: ConstantPool.C ConstantPool.H
 Instance.o: Instance.C Instance.H CallStack.H DataStack.H
 	${CC} ${CCFLAGS} -c Instance.C
 
-Heap.o: Heap.C Heap.H Instance.H
+Heap.o: Heap.C Heap.H Instance.H InstanceCLASS.H InstanceSTRING.H InstanceDOUBLE.H InstanceINT.H Class.H
 	${CC} ${CCFLAGS} -c Heap.C
 	
 Class.o: Class.C Class.H Function.H
@@ -122,13 +122,13 @@ InstructionCALL.o: InstructionCALL.C InstructionCALL.H Instruction.H Instance.H 
 InstructionMCALL.o: InstructionMCALL.C InstructionMCALL.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H ClassPool.H ConstantPool.H NativeFunctions.H InstanceCLASS.H
 	${CC} ${CCFLAGS} -c InstructionMCALL.C
 
-InstanceINT.o: InstanceINT.C InstanceINT.H Instance.H InstanceDOUBLE.H
+InstanceINT.o: InstanceINT.C InstanceINT.H Instance.H InstanceDOUBLE.H Heap.H
 	${CC} ${CCFLAGS} -c InstanceINT.C
 
-InstanceCLASS.o: InstanceCLASS.C InstanceCLASS.H Instance.H Class.H Heap.H InstanceINT.H
+InstanceCLASS.o: InstanceCLASS.C InstanceCLASS.H Instance.H Class.H InstanceINT.H
 	${CC} ${CCFLAGS} -c InstanceCLASS.C
 
-InstanceDOUBLE.o: InstanceDOUBLE.C InstanceDOUBLE.H Instance.H InstanceINT.H
+InstanceDOUBLE.o: InstanceDOUBLE.C InstanceDOUBLE.H Instance.H InstanceINT.H Heap.H
 	${CC} ${CCFLAGS} -c InstanceDOUBLE.C
 
 InstanceSTRING.o: InstanceSTRING.C InstanceSTRING.H Instance.H

@@ -5,6 +5,6 @@ void InstructionNEW::execute(){
 	int param = f->getFunction()->getIntBC(f->getEIP());
 	f->addEIP(4); 
 	//param points to constantpool .... in InstanceClass find name of the class,....
-	dataStack->push(heap->addInstance(new InstanceCLASS(classPool->getClass(constantPool->getConstant(param)), heap)));
+	dataStack->push(heap->addInstanceCLASS(classPool->getClass(constantPool->getConstant(param))));
 }
 
