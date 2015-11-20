@@ -12,6 +12,10 @@ void Runtime::initialize(const std::string &file){
 	loader->load(file);
 	loader->print();
 	callStack->addFrame(dataStack->size(), "main", "main", classPool);
+	NativeFunctions::addFunction("print");
+	NativeFunctions::addFunction("readInt");
+	NativeFunctions::addFunction("readDouble");
+	NativeFunctions::addFunction("readString");
 }
 
 bool Runtime::run(){

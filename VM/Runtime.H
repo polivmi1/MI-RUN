@@ -37,6 +37,7 @@
 #include "InstructionRET.H"
 #include "InstructionPUSHMEMBER.H"
 #include "InstructionSTOREMEMBER.H"
+#include "NativeFunctions.H"
 
 class Runtime{
 	private:

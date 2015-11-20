@@ -27,6 +27,7 @@ class InstanceSTRING : public Instance{
 		Instance * ceq(Instance * b);
 		Instance * cneq(Instance * b);
 		std::string getType();
+		std::string toString(){return value;}
 };
 
 #endif

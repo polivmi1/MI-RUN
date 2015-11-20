@@ -3,7 +3,7 @@
 void InstructionCLT::execute(){
 	Instance * a = heap->getInstance(dataStack->pop());
 	Instance * b = heap->getInstance(dataStack->pop());
-	Instance * c = a->clt(b);	//return new instance after adding
+	Instance * c = b->clt(a);	//return new instance after adding
 	if(c == NULL){
 		throw std::runtime_error("InstructionCLT CLT error");
 	}

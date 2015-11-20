@@ -25,6 +25,7 @@ class Instance{
 		virtual Instance * ceq(Instance * b) = 0;
 		virtual Instance * cneq(Instance * b) = 0;
 		virtual std::string getType() = 0;
+		virtual std::string toString() = 0;
 		virtual int getRefMember(std::string){return -1;}
 		virtual bool isTrue(){return false;}//FOR CJMP
 };

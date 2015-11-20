@@ -9,16 +9,16 @@ int Loader::getInt(ifstream & file){
 
 
 	int t, ret = 0;
-	char a = buf[0];
+	t = buf[0];
 	t = t<<24;
 	ret = ret | t;
-	a = buf[1];
+	t = buf[1];
 	t = t<<16;
 	ret = ret | t;
-	a = buf[2];
+	t = buf[2];
 	t = t<<8;
 	ret = ret | t;
-	a = buf[3];
+	t = buf[3];
 	ret = ret | t;
 	
 	return ret;
@@ -56,6 +56,7 @@ void Loader::load(const std::string &name){
   Class * my_class;
   //classes
   n_classes = getInt(file);
+  cout << "Size: " << n_classes << endl;
   
   //add class "Base"
   classPool->addClass(new Class("Base", NULL));

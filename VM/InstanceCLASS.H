@@ -30,6 +30,7 @@ class InstanceCLASS : public Instance{
 		Instance * cneq(Instance * b);
 		std::string getType();
 		int getRefMember(std::string);
+		std::string toString(){return "CLASS";}
 };
 
 #endif

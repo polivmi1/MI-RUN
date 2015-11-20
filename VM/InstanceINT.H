@@ -7,6 +7,7 @@
 #include <cstring>
 #include <map>
 #include <stdexcept>
+#include <sstream>
 
 #include "Instance.H"
 #include "InstanceDOUBLE.H"
@@ -30,6 +31,7 @@ class InstanceINT : public Instance{
 		std::string getType();
 		int getValue(){return value;}
 		bool isTrue();
+		std::string toString(){std::stringstream ss;ss<<value;std::string s;ss>>s;return s;}
 };
 
 #endif

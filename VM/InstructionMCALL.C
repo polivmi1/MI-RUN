@@ -10,6 +10,9 @@ void InstructionMCALL::execute(){
 	std::string f_name = constantPool->getConstant(paramFunc); 
 	std::string c_name = constantPool->getConstant(paramClass);
 	
+	if(NativeFunctions::callNative(f_name, dataStack, heap))//try to call native function
+		return;
+		
 	callStack->addFrame(dataStack->size(), c_name, f_name, classPool);
 	
 	Frame * nFr = callStack->top();
