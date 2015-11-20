@@ -3,10 +3,18 @@ class main : Base {
 	m_2;
 	function main(){
 	  i = 115;
-	  r = 2+1;
+	  
+	  g = this.readDouble();
+	  this.print(g);
+	  g = this.readString();
+	  this.print(g);
+	  
 	  r = i-1;
-	
 	  this.print(r);
+	  i = this.readInt();
+	  r = i-1;
+	  this.print(r);
+	  
 	//  s = this.read() ;
 	//  h = new C_A;
 	//  this.print(h.F_B(k,s)) ;

@@ -11,6 +11,9 @@
 #include "Instance.H"
 #include "DataStack.H"
 #include "Heap.H"
+#include "InstanceINT.H"
+#include "InstanceDOUBLE.H"
+#include "InstanceSTRING.H"
 
 
 class NativeFunctions{

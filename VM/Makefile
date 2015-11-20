@@ -134,5 +134,5 @@ InstanceDOUBLE.o: InstanceDOUBLE.C InstanceDOUBLE.H Instance.H InstanceINT.H
 InstanceSTRING.o: InstanceSTRING.C InstanceSTRING.H Instance.H
 	${CC} ${CCFLAGS} -c InstanceSTRING.C
 	
-NativeFunctions.o: NativeFunctions.C NativeFunctions.H Heap.H DataStack.H
+NativeFunctions.o: NativeFunctions.C NativeFunctions.H Heap.H DataStack.H InstanceSTRING.H InstanceINT.H InstanceDOUBLE.H
 	${CC} ${CCFLAGS} -c NativeFunctions.C
