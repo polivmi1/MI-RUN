@@ -7,17 +7,18 @@
 #include <stdio.h>
 #include "Runtime.H"
 
+
 using namespace std;
 
 int main(int argc, char ** argv)
 {
   Runtime *g = new Runtime();
-  cout << "Initializing data" << endl;
+  DEB("Initializing data");
   g->initialize("saved_data");
-  cout << "Data initialized" << endl;
-  cout << "Starting execution" << endl;
+  DEB("Data initialized");
+  DEB("Starting execution");
   g->run();
-  cout << "Execution finished" << endl;
+  DEB("Execution finished");
   
   return 1;
 }

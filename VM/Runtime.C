@@ -10,7 +10,7 @@ ClassPool * Runtime::getClassPool(){
 
 void Runtime::initialize(const std::string &file){
 	loader->load(file);
-	loader->print();
+	//loader->print();
 	callStack->addFrame(dataStack->size(), "main", "main", classPool);
 	NativeFunctions::addFunction("print");
 	NativeFunctions::addFunction("readInt");
@@ -21,7 +21,7 @@ void Runtime::initialize(const std::string &file){
 bool Runtime::run(){
 	while(!callStack->empty()){
 		gc->run(heap);
-		std::cout << "Fetching and executing instruction" << std::endl;
+		DEB("Fetching and executing instruction");
         Instruction * instr = fetch();
 		instr->execute();
 		delete instr;
@@ -35,7 +35,7 @@ Instruction * Runtime::fetch(){
 	char instruction = f->getFunction()->getBC(eip);
 	f->addEIP(1);//SAVED BYTECODE NOT IN INTS BUT IN BYTES...
 	
-	printf("Instruction: %d\n", instruction);
+	DEB("Instruction: " + instruction);
 	switch(instruction){
 		case 0x01:
 			return new InstructionADD(callStack, dataStack, heap);
@@ -104,14 +104,6 @@ Instruction * Runtime::fetch(){
 			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//CHECK DELETE OLD VALUE
 			break;
 		default:		
-			std::cout << instruction << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+1) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+2) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+3) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+4) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+5) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+6) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+7) << std::endl;
 			std::cout << "ERROR: UNKNOWN INSTRUCTION" << std::endl;
 			break;
 	}

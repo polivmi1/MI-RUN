@@ -2,6 +2,7 @@
 #define RUNTIME_HEADER
 
 #include <iostream>
+#include "Debug.H"
 #include <cstdio>
 #include <vector>
 #include <cstring>

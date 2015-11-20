@@ -2,6 +2,6 @@
 
 void GarbageCollector::run(Heap * heap){
 	
-	printf("TODO FINISH GC\n");
+	std::cout << "ERROR:: TODO FINISH GC" << std::endl;  
 
 }

@@ -2,6 +2,7 @@
 #define FUNCTION_HEADER
 
 #include <iostream>
+
 #include <cstdio>
 #include <vector>
 #include <cstring>
@@ -23,7 +24,6 @@ class Function{
 		std::string getName();
 		char getBC(int pos);
 		int getIntBC(int pos);
-		void call();
 		int getNumParameters();
 };
 

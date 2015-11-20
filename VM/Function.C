@@ -33,6 +33,3 @@ int Function::getNumParameters(){
 	return c_parameters;
 }
 
-void Function::call(){
-	printf("TODO CALL FUNCTION, MAKE A NEW FRAME, STORE FUNCTION PARAMETERS FROM DATASTACK");
-}

@@ -17,7 +17,7 @@ bool NativeFunctions::callNative(std::string name, DataStack *dataStack, Heap *h
 	}
 	if(name == "print"){
 		Instance * a = heap->getInstance(dataStack->pop());
-		std::cout << "***************PRINT: " << a->toString() << std::endl;
+		std::cout << a->toString() << std::endl;
 	}else if(name == "readInt"){
 		int x;
 		std::cin >> x;
