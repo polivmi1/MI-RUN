@@ -18,6 +18,7 @@ class CallStack{
 	public:
 		void addFrame(int ebp, std::string c_name, std::string f_name, ClassPool *classPool);
 		int empty();
+		int size();
 		Frame * top();
 		Frame * pop();
 		

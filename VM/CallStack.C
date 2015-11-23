@@ -8,6 +8,10 @@ int CallStack::empty(){
 	return !execStack.size();
 }
 
+int CallStack::size(){
+	return execStack.size();
+}
+
 Frame * CallStack::top(){
 	return execStack.top();
 }

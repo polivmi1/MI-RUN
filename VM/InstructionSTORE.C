@@ -9,6 +9,7 @@ void InstructionSTORE::execute(){
 	//store datastack.pop() to s  
 	
 	int to = dataStack->pop();  
+	//std::cout<<"STORE:: "<<param <<"  " <<to << std::endl; 
 	
 	f->setVariable(param, to);
 }

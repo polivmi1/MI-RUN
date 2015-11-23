@@ -1,0 +1,70 @@
+class main : Base {
+	function main () {
+	  ll = new LinkedList;
+	  ll.size = 0;	
+	  
+	  i = 5;
+	  while(i != 0){ 
+	  this.print("-------BEG:");
+	    this.print(ll.size);
+		this.print(ll.value);
+		ll.add(i, ll); 
+	    this.print(ll.size);
+		this.print(ll.value);
+	  this.print("-------END:");
+		
+		i = i - 1;
+	  }
+	  this.print("-------Finished Cycle Done size:");
+
+	  ll.to_string(ll);
+	  return 1;
+	}	
+	
+	
+}
+
+class LinkedList : Base {
+  value;
+  next;
+  size;
+  function add(tvalue, ll){	
+		this.print(tvalue);//chyba
+		this.print(ll);//chyba...prohozeni
+	  if(ll.size == 0){
+	    this.print("------SIZE ====== 0");
+	    this.print(tvalue);
+		ll.value = tvalue;
+		ll.next = 0;
+		ll.size = 1;
+		
+		return 1;
+	  }else{
+	    this.print("------SIZE != 0");
+	    g = ll.size;
+		
+		t = ll;
+		while(g != 1){
+			t = t.next;
+			g = g - 1;
+		}
+		  h = new LinkedList;
+		  h.value = tvalue;
+		  h.next = 0;
+		  t.next = h;
+		  ll.size = ll.size + 1;
+		  
+		  return 1;
+	  }
+  }
+  function to_string(ll){
+	g = ll.size;
+	while(g != 0){
+		this.print(ll.value);
+		ll = ll.next;
+		g = g - 1;
+	}
+	return 1;  
+  }
+}
+

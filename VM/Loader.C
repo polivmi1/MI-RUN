@@ -9,16 +9,16 @@ int Loader::getInt(ifstream & file){
 
 
 	int t, ret = 0;
-	t = buf[0];
+	t = (unsigned char)buf[0];
 	t = t<<24;
 	ret = ret | t;
-	t = buf[1];
+	t = (unsigned char)buf[1];
 	t = t<<16;
 	ret = ret | t;
-	t = buf[2];
+	t = (unsigned char)buf[2];
 	t = t<<8;
 	ret = ret | t;
-	t = buf[3];
+	t = (unsigned char)buf[3];
 	ret = ret | t;
 	
 	return ret;
@@ -32,7 +32,7 @@ void Loader::load(const std::string &name){
   file.open(name.c_str(), std::ios::in | std::ios::binary);
   fileC.open((name + "C").c_str());
   
-  char c;
+  unsigned char c;
   int n_classes;
   int n_functions, n_members;
   int c_name, c_parent, f_name, n_param, m_name;
@@ -87,9 +87,9 @@ void Loader::load(const std::string &name){
 		DEB("Name: " + constantPool->getConstant(f_name));
 		n_param = getInt(file);
 		DEB(n_param);
-		vector<char> bc;
-		while(file.read(buf, sizeof(buf) / sizeof(*buf)) && buf[0] != 0x21){//till end fun
-			bc.push_back(buf[0]);
+		vector<unsigned char> bc;
+		while(file.read(buf, sizeof(buf) / sizeof(*buf)) && (unsigned char)buf[0] != 0x21){//till end fun
+			bc.push_back((unsigned char)buf[0]);
 		}
 	    my_class->addFunction(new Function(constantPool->getConstant(f_name), n_param, bc));
 	  }

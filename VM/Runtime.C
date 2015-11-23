@@ -20,8 +20,8 @@ void Runtime::initialize(const std::string &file){
 
 bool Runtime::run(){
 	while(!callStack->empty()){
-		gc->run(heap);
-		DEB("Fetching and executing instruction");
+		//gc->run(heap);
+		//DEB("Fetching and executing instruction");
         Instruction * instr = fetch();
 		instr->execute();
 		delete instr;
@@ -32,10 +32,48 @@ bool Runtime::run(){
 Instruction * Runtime::fetch(){
 	Frame * f = callStack->top();
 	int eip = f->getEIP();
-	char instruction = f->getFunction()->getBC(eip);
+	unsigned char instruction = f->getFunction()->getBC(eip);
 	f->addEIP(1);//SAVED BYTECODE NOT IN INTS BUT IN BYTES...
 	
-	DEB("Instruction: " + instruction);
+	const std::string instructionTable[] = {"0",
+"ADD",
+"SUB",
+"DIV",
+"MUL",
+"NEW",
+"PUSHID",
+"PUSHINT",
+"STORE",
+"CALL",
+"RET",
+"CLT",
+"CGT",
+"CEQ",
+"CNEQ",
+"CJMP",
+"BJMP",
+"ID",
+"INT",
+"CHAR",
+"DOUBLE",
+"STRING",
+"MCALL",
+"PUSHDOUBLE",
+"PUSHSTRING",
+"ClassName",
+"ClassParent",
+"DFUN",
+"FJMP", 
+"SIZE",
+"<BEGIN CLASS>",
+"<END CLASS>",
+"<BEGIN FUN>",
+"<END FUN>",
+"<CLASSES>","","","","","","","","","","","","","","PUSHMEMBER","STOREMEMBER"};//next = 0x23
+	
+	
+	//DEB((int)instruction);
+	//DEB(instructionTable[(int)instruction]);
 	switch(instruction){
 		case 0x01:
 			return new InstructionADD(callStack, dataStack, heap);

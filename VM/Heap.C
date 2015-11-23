@@ -6,7 +6,15 @@ int Heap::addInstance(Instance * inst){
 	while(it != heap.end() && *it != NULL){
 		it++;i++;
 	}
-	heap.insert(it, inst);
+	if(i >= heap.size()){
+		if(heap.size() == 0){
+			heap.resize(10);
+		}
+		else
+			heap.resize(i*2);
+		
+	}
+	heap[i] = inst;
 	return i;
 }
 

@@ -18,15 +18,20 @@ void InstructionMCALL::execute(){
 	
 	if(NativeFunctions::callNative(f_name, dataStack, heap))//try to call native function
 		return;
-		
+		 
 	callStack->addFrame(dataStack->size(), c_name, f_name, classPool);
 	
 	Frame * nFr = callStack->top();
 	int n_params = nFr->getFunction()->getNumParameters();
 	nFr->setEBP(nFr->getEBP() - n_params); // decrease ebp by the number of parameters
 		
-	for(int i = 0; i < n_params; i++)
+	for(int i = 0; i < n_params; i++){
+		//DEB( heap->getInstance(asa[n_params - i - 1])->toString() );
+		//DEB( heap->getInstance(asa[n_params - i - 1])->getType() );
 		nFr->setVariable(i, dataStack->pop());	//double check this....
+
+	}
+	
 }
 
 

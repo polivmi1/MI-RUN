@@ -1,7 +1,7 @@
 #ifndef DEBUG_HEADER
 #define DEBUG_HEADER
 
-#define DEBAs
+#define DEBAa
 
 #ifdef DEBA
 	#define DEB(x) std::cout << #x" = " << x << std::endl

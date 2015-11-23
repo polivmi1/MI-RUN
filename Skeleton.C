@@ -480,9 +480,9 @@ void Skeleton::visitListStm(ListStm* liststm)
 void Skeleton::visitListExp(ListExp* listexp)
 {
 	
-  for (ListExp::iterator i = listexp->begin() ; i != listexp->end() ; ++i)
+  for (ListExp::iterator i = listexp->end() ; i != listexp->begin() ; --i)
   {
-    (*i)->accept(this);
+    (*(i-1))->accept(this); 
   }
   
 }
