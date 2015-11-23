@@ -134,7 +134,7 @@ void Skeleton::visitDClass(DClass *dclass)
 void Skeleton::visitADecl(ADecl *adecl)
 {
   /* Code For ADecl Goes Here */
- 
+ getAddEnvPool(adecl->id_);
   //bc.addByte(0x08);	
   //std::cout << "[1]STORE to "; 
   //visitId(adecl->id_);	

@@ -29,8 +29,8 @@ class LinkedList : Base {
   next;
   size;
   function add(tvalue, ll){	
-		this.print(tvalue);//chyba
-		this.print(ll);//chyba...prohozeni
+		this.print(ll);
+		this.print(tvalue);
 	  if(ll.size == 0){
 	    this.print("------SIZE ====== 0");
 	    this.print(tvalue);
