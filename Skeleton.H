@@ -64,7 +64,7 @@ public:
   void visitENEq(ENEq* p);
   void visitEAss(EAss* p);
   void visitListDef(ListDef* p);
-  void Skeleton::visitListDfn(ListDfn* p);
+  void visitListDfn(ListDfn* p);
   void visitListDmem(ListDmem* p);
   void visitListArg(ListArg* p);
   void visitListStm(ListStm* p);
