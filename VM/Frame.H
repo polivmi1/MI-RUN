@@ -35,6 +35,9 @@ class Frame{
 		void setEBP(int);
 		void setEIP(int);
 		void setVariable(int, int);
+		
+		friend class GarbageCollector;
+		
 };
 
 

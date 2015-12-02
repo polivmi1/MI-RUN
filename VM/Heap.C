@@ -1,13 +1,27 @@
 #include "Heap.H"
 
 int Heap::addInstance(Instance * inst){
-	int i = 0;
-	std::vector<Instance *>::iterator it = heap.begin();
-	while(it != heap.end() && *it != NULL){
-		it++;i++;
-	}
-	heap.insert(it, inst);
-	return i;
+  if(available.empty()) gc->run(this);
+  if(available.empty()) expandHeap();
+  int pos = available.top();
+  available.pop();
+  heap[pos] = inst;
+  if(occupiedCnt == (int)occupied.size()) occupied.push_back(pos);
+  else occupied[occupiedCnt] = pos;
+  ++occupiedCnt;
+  printf("Allocate at address %d\n", pos);
+  return pos;
+}
+
+void Heap::expandHeap() {
+  printf("Expanding heap from %d to %d items.\n", heapSize, 2*heapSize);
+  Instance ** newHeap = new Instance*[2*heapSize];
+  for(int i = 0; i < heapSize; ++i) newHeap[i] = heap[i];
+  for(int i = heapSize; i < 2*heapSize; ++i) newHeap[i] = NULL;
+  for(int i = 2*heapSize-1; i >= heapSize; --i) available.push(i);
+  heapSize *= 2;
+  delete heap;
+  heap = newHeap;
 }
 
 int Heap::addInstanceINT(int value){
@@ -33,9 +47,13 @@ int Heap::addInstanceCLASS(Class * value){
 	InstanceCLASS * inst = new InstanceCLASS(value);
 	int n_members = inst->getClass()->getMemberSize();
 	for(int i = 0; i < n_members; i++){
-		inst->members[i] = addInstanceINT(0);
+    ds->push(addInstanceINT(0)); // TODO address should me -1
 	}
-	return addInstance(inst);
+	int pos = addInstance(inst);
+	for(int i = n_members-1; i >= 0; i--){
+    inst->members[i] = ds->pop();
+	}
+	return pos;
 }
 
 
@@ -43,7 +61,8 @@ int Heap::addInstanceCLASS(Class * value){
 
 
 Instance * Heap::getInstance(int ref){
-	if(heap[ref] == NULL){
+  printf("Address: %d\n", ref);
+	if(ref >= heapSize || heap[ref] == NULL){
 		throw std::runtime_error("Heap doesn't contain that address " + ref);
 	}
 	return heap[ref];

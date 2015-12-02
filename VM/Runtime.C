@@ -20,7 +20,8 @@ void Runtime::initialize(const std::string &file){
 
 bool Runtime::run(){
 	while(!callStack->empty()){
-		gc->run(heap);
+		//gc->run(heap);
+		gc->run(heap,callStack,dataStack);
 		std::cout << "Fetching and executing instruction" << std::endl;
         Instruction * instr = fetch();
 		instr->execute();

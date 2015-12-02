@@ -12,12 +12,17 @@
 
 class DataStack{
 	private:
-		std::stack<int> dataStack; //references on heap
+		std::vector<int> dataStack; //references on heap
+		int stackSize;
 	public:
+    DataStack() : stackSize(0) {}
 		int size();
 		int pop();
 		void push(int a);
 		//TODO
+		
+		friend class GarbageCollector;
+		
 };
 
 

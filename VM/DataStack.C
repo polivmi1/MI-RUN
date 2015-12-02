@@ -5,14 +5,14 @@ int DataStack::size(){
 }
 
 int DataStack::pop(){
-	if(dataStack.size() == 0)
-		std::cout << "ERROR:: DATASTACK IS EMPTY" << std::endl;  
-	int ret = dataStack.top();
-	dataStack.pop();
-	return ret;
+  if(stackSize == 0)
+		std::cout << "ERROR:: DATASTACK IS EMPTY" << std::endl;
+  return dataStack[--stackSize];
 }
 
 void DataStack::push(int a){
-	dataStack.push(a);
+  if((int)dataStack.size() == stackSize) dataStack.push_back(a);
+  else dataStack[stackSize] = a;
+  ++stackSize;
 }
 

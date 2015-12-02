@@ -51,13 +51,13 @@ class Runtime{
 		
 	public:
 	    Runtime(){
-			heap = new Heap();
 			constantPool = new ConstantPool();
 			classPool = new ClassPool();
 			loader = new Loader(classPool, constantPool);
 			callStack = new CallStack();
 			dataStack = new DataStack();
-			gc = new GarbageCollector();
+			gc = new GarbageCollector(callStack,dataStack);
+			heap = new Heap(gc,dataStack);
 		}
 
 		ConstantPool *getConstantPool();		
