@@ -10,7 +10,7 @@ ClassPool * Runtime::getClassPool(){
 
 void Runtime::initialize(const std::string &file){
 	loader->load(file);
-	loader->print();
+	//loader->print();
 	callStack->addFrame(dataStack->size(), "main", "main", classPool);
 	NativeFunctions::addFunction("print");
 	NativeFunctions::addFunction("readInt");
@@ -22,8 +22,8 @@ bool Runtime::run(){
 	while(!callStack->empty()){
 		//gc->run(heap);
 		gc->run(heap,callStack,dataStack);
-		std::cout << "Fetching and executing instruction" << std::endl;
-        Instruction * instr = fetch();
+		//std::cout << "Fetching and executing instruction" << std::endl;
+    Instruction * instr = fetch();
 		instr->execute();
 		delete instr;
 	}
@@ -33,10 +33,48 @@ bool Runtime::run(){
 Instruction * Runtime::fetch(){
 	Frame * f = callStack->top();
 	int eip = f->getEIP();
-	char instruction = f->getFunction()->getBC(eip);
+	unsigned char instruction = f->getFunction()->getBC(eip);
 	f->addEIP(1);//SAVED BYTECODE NOT IN INTS BUT IN BYTES...
 	
-	printf("Instruction: %d\n", instruction);
+	const std::string instructionTable[] = {"0",
+"ADD",
+"SUB",
+"DIV",
+"MUL",
+"NEW",
+"PUSHID",
+"PUSHINT",
+"STORE",
+"CALL",
+"RET",
+"CLT",
+"CGT",
+"CEQ",
+"CNEQ",
+"CJMP",
+"BJMP",
+"ID",
+"INT",
+"CHAR",
+"DOUBLE",
+"STRING",
+"MCALL",
+"PUSHDOUBLE",
+"PUSHSTRING",
+"ClassName",
+"ClassParent",
+"DFUN",
+"FJMP", 
+"SIZE",
+"<BEGIN CLASS>",
+"<END CLASS>",
+"<BEGIN FUN>",
+"<END FUN>",
+"<CLASSES>","","","","","","","","","","","","","","PUSHMEMBER","STOREMEMBER"};//next = 0x23
+	
+	
+	//DEB((int)instruction);
+	//DEB(instructionTable[(int)instruction]);
 	switch(instruction){
 		case 0x01:
 			return new InstructionADD(callStack, dataStack, heap);
@@ -105,14 +143,6 @@ Instruction * Runtime::fetch(){
 			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//CHECK DELETE OLD VALUE
 			break;
 		default:		
-			std::cout << instruction << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+1) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+2) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+3) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+4) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+5) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+6) << std::endl;
-			std::cout << f->getFunction()->getBC(f->getEIP()+7) << std::endl;
 			std::cout << "ERROR: UNKNOWN INSTRUCTION" << std::endl;
 			break;
 	}
