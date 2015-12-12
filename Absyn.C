@@ -525,6 +525,97 @@ SIfElse *SIfElse::clone() const
 
 
 
+/********************   SException    ********************/
+SException::SException(ListStm *p1, ListStm *p2)
+{
+  liststm_1 = p1;
+  liststm_2 = p2;
+
+}
+
+SException::SException(const SException & other)
+{
+  liststm_1 = other.liststm_1->clone();
+  liststm_2 = other.liststm_2->clone();
+
+}
+
+SException &SException::operator=(const SException & other)
+{
+  SException tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SException::swap(SException & other)
+{
+  std::swap(liststm_1, other.liststm_1);
+  std::swap(liststm_2, other.liststm_2);
+
+}
+
+SException::~SException()
+{
+  delete(liststm_1);
+  delete(liststm_2);
+
+}
+
+void SException::accept(Visitor *v)
+{
+  v->visitSException(this);
+}
+
+SException *SException::clone() const
+{
+  return new SException(*this);
+}
+
+
+
+/********************   SThrow    ********************/
+SThrow::SThrow(String p1)
+{
+  string_ = p1;
+
+}
+
+SThrow::SThrow(const SThrow & other)
+{
+  string_ = other.string_;
+
+}
+
+SThrow &SThrow::operator=(const SThrow & other)
+{
+  SThrow tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SThrow::swap(SThrow & other)
+{
+  std::swap(string_, other.string_);
+
+}
+
+SThrow::~SThrow()
+{
+
+}
+
+void SThrow::accept(Visitor *v)
+{
+  v->visitSThrow(this);
+}
+
+SThrow *SThrow::clone() const
+{
+  return new SThrow(*this);
+}
+
+
+
 /********************   EInt    ********************/
 EInt::EInt(Integer p1)
 {

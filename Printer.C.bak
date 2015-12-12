@@ -286,8 +286,7 @@ void PrintAbsyn::visitSWhile(SWhile* p)
   _i_ = 0; p->exp_->accept(this);
   render(')');
   render('{');
-  _i_ = 0; p->stm_->accept(this);
-  render('}');
+  if(p->liststm_) {_i_ = 0; p->liststm_->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -303,9 +302,11 @@ void PrintAbsyn::visitSIfElse(SIfElse* p)
   render('(');
   _i_ = 0; p->exp_->accept(this);
   render(')');
-  _i_ = 0; p->stm_1->accept(this);
+  render('{');
+  if(p->liststm_1) {_i_ = 0; p->liststm_1->accept(this);}  render('}');
   render("else");
-  _i_ = 0; p->stm_2->accept(this);
+  render('{');
+  if(p->liststm_2) {_i_ = 0; p->liststm_2->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -788,7 +789,7 @@ void ShowAbsyn::visitSWhile(SWhile* p)
   bufAppend(']');
   bufAppend(' ');
   bufAppend('[');
-  if (p->stm_)  p->stm_->accept(this);
+  if (p->liststm_)  p->liststm_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -802,9 +803,10 @@ void ShowAbsyn::visitSIfElse(SIfElse* p)
   if (p->exp_)  p->exp_->accept(this);
   bufAppend(']');
   bufAppend(' ');
-  p->stm_1->accept(this);
+  p->liststm_1->accept(this);
   bufAppend(' ');
-  p->stm_2->accept(this);
+  p->liststm_2->accept(this);
+  bufAppend(' ');
   bufAppend(')');
 }
 void ShowAbsyn::visitListStm(ListStm *liststm)

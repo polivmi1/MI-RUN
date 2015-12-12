@@ -11,6 +11,7 @@
 #include "Heap.H"
 #include "CallStack.H"
 #include "DataStack.H"
+#include "Debug.H"
 class Heap;
 
 class GarbageCollector{

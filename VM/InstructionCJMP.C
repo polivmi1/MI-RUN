@@ -9,7 +9,6 @@ void InstructionCJMP::execute(){
 	
 	//std::cout<< a->toString() << std::endl;
 	if(a->isTrue()){
-		std::cout<<"CJUMPING"<<std::endl;
 		f->addEIP(param);
 	}
 }

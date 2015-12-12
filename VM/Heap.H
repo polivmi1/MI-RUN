@@ -15,6 +15,7 @@
 #include "InstanceCLASS.H"
 #include "Class.H"
 #include "GarbageCollector.h"
+#include "Debug.H"
 class GarbageCollector;
 
 #define INIT_HEAP_SIZE 2

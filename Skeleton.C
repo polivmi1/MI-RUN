@@ -134,7 +134,7 @@ void Skeleton::visitDClass(DClass *dclass)
 void Skeleton::visitADecl(ADecl *adecl)
 {
   /* Code For ADecl Goes Here */
- 
+ getAddEnvPool(adecl->id_);
   //bc.addByte(0x08);	
   //std::cout << "[1]STORE to "; 
   //visitId(adecl->id_);	
@@ -240,6 +240,37 @@ void Skeleton::visitSIfElse(SIfElse *sifelse)
   bc.changeIntByte(bc.size() - (end - mid), end - mid2);
   
 
+}
+
+void Skeleton::visitSException(SException *sexception)
+{
+  /* Code For SException Goes Here */
+
+  bc.addByte(0x2E);
+  int mid0 = bc.getCounter(); 
+  bc.addInt(0);//where to jump if throw
+	sexception->liststm_1->accept(this);
+  bc.addByte(0x2F);
+  bc.addByte(0x1C);//FJMP
+  int mid = bc.getCounter(); 
+  bc.addInt(0);//how much to jump after catch
+  int mid2 = bc.getCounter(); 
+	sexception->liststm_2->accept(this);
+  int end = bc.getCounter();
+  bc.changeIntByte(bc.size() - (end - mid), end - mid2);
+  bc.changeIntByte(bc.size() - (end - mid0), mid2);
+
+}
+
+void Skeleton::visitSThrow(SThrow *sthrow)
+{
+  /* Code For SThrow Goes Here */
+
+  bc.addByte(0x18);
+  std::cout << "PUSHSTRING "; 
+  visitString(sthrow->string_);
+  
+  bc.addByte(0x2D);//THROW
 }
 
 void Skeleton::visitEInt(EInt *eint)
@@ -480,9 +511,9 @@ void Skeleton::visitListStm(ListStm* liststm)
 void Skeleton::visitListExp(ListExp* listexp)
 {
 	
-  for (ListExp::iterator i = listexp->begin() ; i != listexp->end() ; ++i)
+  for (ListExp::iterator i = listexp->end() ; i != listexp->begin() ; --i)
   {
-    (*i)->accept(this);
+    (*(i-1))->accept(this); 
   }
   
 }

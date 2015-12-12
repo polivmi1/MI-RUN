@@ -40,7 +40,8 @@ int Heap::addInstanceCLASS(Class * value){
 
 
 Instance * Heap::getInstance(int ref){
-  printf("Address: %d\n", ref);
+  DEB("Address: ");
+  DEB(ref);
 	if(ref >= heap.size() || heap[ref] == NULL){
 		throw std::runtime_error("Heap doesn't contain that address " + ref);
 	}

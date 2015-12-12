@@ -603,8 +603,8 @@ Stm : Exp _SYMB_5 {  $$ = new SExp($1); YY_RESULT_Stm_= $$; }
   | _SYMB_25 _SYMB_7 Exp _SYMB_5 {  $$ = new SInit($1, $3); YY_RESULT_Stm_= $$; }
   | _SYMB_25 _SYMB_8 _SYMB_25 _SYMB_7 Exp _SYMB_5 {  $$ = new SMemInit($1, $3, $5); YY_RESULT_Stm_= $$; }
   | _SYMB_23 Exp _SYMB_5 {  $$ = new SReturn($2); YY_RESULT_Stm_= $$; }
-  | _SYMB_24 _SYMB_0 Exp _SYMB_1 _SYMB_2 Stm _SYMB_3 {  $$ = new SWhile($3, $6); YY_RESULT_Stm_= $$; }
-  | _SYMB_21 _SYMB_0 Exp _SYMB_1 Stm _SYMB_19 Stm {  $$ = new SIfElse($3, $5, $7); YY_RESULT_Stm_= $$; }
+  | _SYMB_24 _SYMB_0 Exp _SYMB_1 _SYMB_2 ListStm _SYMB_3 {  $$ = new SWhile($3, $6); YY_RESULT_Stm_= $$; }
+  | _SYMB_21 _SYMB_0 Exp _SYMB_1 _SYMB_2 ListStm _SYMB_3 _SYMB_19 _SYMB_2 ListStm _SYMB_3 {  $$ = new SIfElse($3, $6, $10); YY_RESULT_Stm_= $$; }
 ;
 ListStm : /* empty */ {  $$ = new ListStm(); YY_RESULT_ListStm_= $$; } 
   | ListStm Stm {  $1->push_back($2) ; $$ = $1 ; YY_RESULT_ListStm_= $$; }

@@ -9,6 +9,7 @@
 #include <stdexcept>
 
 #include "Heap.H"
+#include "Debug.H"
 
 class GarbageCollector{
 	private:

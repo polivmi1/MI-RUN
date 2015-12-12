@@ -20,7 +20,13 @@ void Class::addFunction(Function * f){
 Function * Class::getFunction(std::string name){
 	std::map<std::string, Function * >::iterator it = functions.find(name);
 	if(it == functions.end()){
-		throw std::runtime_error("Unable to find function " + name);
+		if(parent != NULL){
+			return parent->getFunction(name);
+		}
+		else{
+			return NULL;
+			//throw std::runtime_error("Unable to find function " + name);
+		}
 	}
 	
 	return it->second;	

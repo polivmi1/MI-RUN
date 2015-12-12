@@ -17,7 +17,9 @@ void GarbageCollector::marker(int idx, bool * mark, Instance ** heap) {
 }
 
 void GarbageCollector::run(Heap * heap, CallStack * callStack, DataStack * dataStack) {
-  printf("BEGIN GC\n");
+
+  DEB("BEGIN GC");
+
   bool * mark = new bool[heap->heapSize];
   memset(mark,false,heap->heapSize*sizeof(bool));
   for(int i = 0; i < dataStack->stackSize; ++i) {
@@ -37,17 +39,10 @@ void GarbageCollector::run(Heap * heap, CallStack * callStack, DataStack * dataS
     } else {
       heap->available.push(heapPos);
       heap->heap[heapPos] = NULL;
-      printf("Deallocate at address %d\n", heapPos);
+      DEB("Deallocate at address");
+	  DEB(heapPos);
     }
   }
   heap->occupiedCnt = occCnt;
-  printf("END GC\n");
+  DEB("END GC");
 }
-
-
-
-
-
-
-
-

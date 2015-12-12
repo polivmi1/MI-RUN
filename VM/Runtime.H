@@ -2,6 +2,7 @@
 #define RUNTIME_HEADER
 
 #include <iostream>
+#include "Debug.H"
 #include <cstdio>
 #include <vector>
 #include <cstring>
@@ -38,6 +39,9 @@
 #include "InstructionPUSHMEMBER.H"
 #include "InstructionSTOREMEMBER.H"
 #include "NativeFunctions.H"
+#include "InstructionTHROW.H"
+#include "InstructionBTRY.H"
+#include "InstructionFTRY.H"
 
 class Runtime{
 	private:

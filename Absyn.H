@@ -38,6 +38,8 @@ class SMemInit;
 class SReturn;
 class SWhile;
 class SIfElse;
+class SException;
+class SThrow;
 class EInt;
 class EDouble;
 class EString;
@@ -87,6 +89,8 @@ public:
   virtual void visitSReturn(SReturn *p) = 0;
   virtual void visitSWhile(SWhile *p) = 0;
   virtual void visitSIfElse(SIfElse *p) = 0;
+  virtual void visitSException(SException *p) = 0;
+  virtual void visitSThrow(SThrow *p) = 0;
   virtual void visitEInt(EInt *p) = 0;
   virtual void visitEDouble(EDouble *p) = 0;
   virtual void visitEString(EString *p) = 0;
@@ -347,6 +351,35 @@ public:
   virtual void accept(Visitor *v);
   virtual SIfElse *clone() const;
   void swap(SIfElse &);
+};
+
+class SException : public Stm
+{
+public:
+  ListStm *liststm_1;
+  ListStm *liststm_2;
+
+  SException(const SException &);
+  SException &operator=(const SException &);
+  SException(ListStm *p1, ListStm *p2);
+  ~SException();
+  virtual void accept(Visitor *v);
+  virtual SException *clone() const;
+  void swap(SException &);
+};
+
+class SThrow : public Stm
+{
+public:
+  String string_;
+
+  SThrow(const SThrow &);
+  SThrow &operator=(const SThrow &);
+  SThrow(String p1);
+  ~SThrow();
+  virtual void accept(Visitor *v);
+  virtual SThrow *clone() const;
+  void swap(SThrow &);
 };
 
 class EInt : public Exp

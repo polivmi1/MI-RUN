@@ -134,10 +134,10 @@ void Skeleton::visitDClass(DClass *dclass)
 void Skeleton::visitADecl(ADecl *adecl)
 {
   /* Code For ADecl Goes Here */
- 
-  bc.addByte(0x08);	
-  std::cout << "[1]STORE to "; 
-  visitId(adecl->id_);	
+ getAddEnvPool(adecl->id_);
+  //bc.addByte(0x08);	
+  //std::cout << "[1]STORE to "; 
+  //visitId(adecl->id_);	
 }
 
 void Skeleton::visitSExp(SExp *sexp)
@@ -190,18 +190,24 @@ void Skeleton::visitSReturn(SReturn *sreturn)
 void Skeleton::visitSWhile(SWhile *swhile)
 {
   /* Code For SWhile Goes Here */
+  int beg0 = bc.getCounter();
   swhile->exp_->accept(this);//pushed on stack
+  bc.addByte(0x07);
+  bc.addInt(0);
+  std::cout << "PUSHINT 0" << std::endl; 
+  bc.addByte(0x0D);//CEQ -> 1 if jump
+  std::cout << "CEQ" << std::endl; 
   bc.addByte(0x0F);//CJMP
+  std::cout << "CJMP" << std::endl; 
   int beg = bc.getCounter();
   bc.addInt(0);//how much if jump
   
-  swhile->stm_->accept(this);
-  bc.addByte(0x10);//DJMP  //FJMP = 0x1C 
-  int insertedBC = bc.getCounter() - beg;
-  bc.addInt(insertedBC);
+  swhile->liststm_->accept(this);
+  bc.addByte(0x10);//BJMP 
+  int end = bc.getCounter();
+  bc.addInt(end - beg0 + 4);
   
-  insertedBC += 4;
-  bc.changeIntByte(bc.size() - insertedBC, insertedBC);
+  bc.changeIntByte(bc.size() - (end - beg + 4), (end - beg));
 
 }
 
@@ -212,24 +218,26 @@ void Skeleton::visitSIfElse(SIfElse *sifelse)
   sifelse->exp_->accept(this);//pushed on stack
   
   bc.addByte(0x07);
-  std::cout << "PUSHINT "; 
   bc.addInt(0);
+  std::cout << "PUSHINT 0" << std::endl; 
   bc.addByte(0x0D);//CEQ -> 1 if jump
+  std::cout << "CEQ" << std::endl; 
   
   bc.addByte(0x0F);//CJMP
+  std::cout << "CJMP" << std::endl; 
   int beg = bc.getCounter();
   bc.addInt(0);//how much if jump
  
-	sifelse->stm_1->accept(this);
-  bc.addByte(0x1C);//FJMP = 0x1C 
+  sifelse->liststm_1->accept(this);
+  bc.addByte(0x1C);//FJMP
   int mid = bc.getCounter(); 
   bc.addInt(0);//how much if jump 
   int mid2 = bc.getCounter(); 
-	sifelse->stm_2->accept(this);
-  int second = bc.getCounter() - mid;
+  sifelse->liststm_2->accept(this);
+  int end = bc.getCounter();
   
-  bc.changeIntByte(bc.size() - second, second);
-  bc.changeIntByte(bc.size() - (mid2 - beg), mid2 - beg);
+  bc.changeIntByte(bc.size() - (end - beg), mid2 - beg - 4);
+  bc.changeIntByte(bc.size() - (end - mid), end - mid2);
   
 
 }
@@ -472,9 +480,9 @@ void Skeleton::visitListStm(ListStm* liststm)
 void Skeleton::visitListExp(ListExp* listexp)
 {
 	
-  for (ListExp::iterator i = listexp->begin() ; i != listexp->end() ; ++i)
+  for (ListExp::iterator i = listexp->end() ; i != listexp->begin() ; --i)
   {
-    (*i)->accept(this);
+    (*(i-1))->accept(this); 
   }
   
 }

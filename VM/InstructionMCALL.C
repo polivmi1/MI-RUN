@@ -15,18 +15,25 @@ void InstructionMCALL::execute(){
 	}
 	InstanceCLASS * t = static_cast<InstanceCLASS*>(a);
 	std::string c_name = t->getClass()->getName();
-	
-	if(NativeFunctions::callNative(f_name, dataStack, heap))//try to call native function
-		return;
-		
-	callStack->addFrame(dataStack->size(), c_name, f_name, classPool);
+			 
+	if(!callStack->addFrame(dataStack->size(), c_name, f_name, classPool)){
+		if(NativeFunctions::callNative(f_name, dataStack, heap))//try to call native function
+			return;
+		else			
+			throw std::runtime_error("Unable to find function " + f_name);
+	}
 	
 	Frame * nFr = callStack->top();
 	int n_params = nFr->getFunction()->getNumParameters();
 	nFr->setEBP(nFr->getEBP() - n_params); // decrease ebp by the number of parameters
 		
-	for(int i = 0; i < n_params; i++)
+	for(int i = 0; i < n_params; i++){
+		//DEB( heap->getInstance(asa[n_params - i - 1])->toString() );
+		//DEB( heap->getInstance(asa[n_params - i - 1])->getType() );
 		nFr->setVariable(i, dataStack->pop());	//double check this....
+
+	}
+	
 }
 
 

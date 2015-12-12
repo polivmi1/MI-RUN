@@ -2,6 +2,7 @@
 #define INSTANCECLASS_HEADER
 
 #include <iostream>
+
 #include <cstdio>
 #include <vector>
 #include <cstring>
@@ -22,7 +23,6 @@ class InstanceCLASS : public Instance{
 			this->myClass = myClass;
 			int n_members = myClass->getMemberSize();
 			members = new int[n_members];
-			// TODO set member index pointers to -1 or initialize
 		} 
 		int  add(Instance * b);
 		int  sub(Instance * b);

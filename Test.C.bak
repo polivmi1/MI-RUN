@@ -9,7 +9,7 @@
 #include "Printer.H"
 #include "Absyn.H"
 #include "Skeleton.H"
-
+ 
 int main(int argc, char ** argv)
 {
   FILE *input;

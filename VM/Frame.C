@@ -35,5 +35,15 @@ void Frame::setEIP(int i){
 }
 
 void Frame::setVariable(int i, int pValue){
-	variables.insert(variables.begin() + i, pValue);
+
+	if(i >= variables.size()){
+		if(variables.size() == 0){
+			variables.resize(10);
+		}
+		else
+			variables.resize(i*2);
+	}
+
+	variables[i] = pValue;
+	//variables.insert(variables.begin() + i, pValue);
 }

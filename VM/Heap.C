@@ -9,12 +9,14 @@ int Heap::addInstance(Instance * inst){
   if(occupiedCnt == (int)occupied.size()) occupied.push_back(pos);
   else occupied[occupiedCnt] = pos;
   ++occupiedCnt;
-  printf("Allocate at address %d\n", pos);
+  DEB("Allocate at address");
+  DEB(pos);
   return pos;
 }
 
 void Heap::expandHeap() {
-  printf("Expanding heap from %d to %d items.\n", heapSize, 2*heapSize);
+  DEB("Expanding heap from");
+  DEB(heapSize);
   Instance ** newHeap = new Instance*[2*heapSize];
   for(int i = 0; i < heapSize; ++i) newHeap[i] = heap[i];
   for(int i = heapSize; i < 2*heapSize; ++i) newHeap[i] = NULL;
@@ -61,7 +63,8 @@ int Heap::addInstanceCLASS(Class * value){
 
 
 Instance * Heap::getInstance(int ref){
-  printf("Address: %d\n", ref);
+  DEB("Address: ");
+  DEB(ref);
 	if(ref >= heapSize || heap[ref] == NULL){
 		throw std::runtime_error("Heap doesn't contain that address " + ref);
 	}

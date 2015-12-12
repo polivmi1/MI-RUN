@@ -19,6 +19,8 @@ SMemInit.       	Stm ::= Id "." Id "=" Exp ";" ;
 SReturn.     		Stm ::= "return" Exp ";" ;
 SWhile.     		Stm ::= "while" "(" Exp ")" "{" [Stm] "}" ;
 SIfElse.     		Stm ::= "if" "(" Exp ")" "{" [Stm] "}" "else" "{" [Stm] "}";
+SException.     	Stm ::= "try" "{" [Stm] "}" "catch" "{" [Stm] "}";
+SThrow.     		Stm ::= "throw" String ";";
 		
 terminator   		Stm "" ;
 

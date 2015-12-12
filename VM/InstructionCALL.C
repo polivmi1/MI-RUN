@@ -12,10 +12,12 @@ void InstructionCALL::execute(){
 	std::string f_name = constantPool->getConstant(param); 
 	std::string c_name = f->getClass()->getName(); //the same class
 	
-	if(NativeFunctions::callNative(f_name, dataStack, heap))//try to call native function
-		return;
-	
-	callStack->addFrame(dataStack->size(), c_name, f_name, classPool);
+	if(!callStack->addFrame(dataStack->size(), c_name, f_name, classPool)){
+		if(NativeFunctions::callNative(f_name, dataStack, heap))//try to call native function
+			return;
+		else			
+			throw std::runtime_error("Unable to find function " + f_name);
+	}
 	
 	Frame * nFr = callStack->top();
 	int n_params = nFr->getFunction()->getNumParameters(); 

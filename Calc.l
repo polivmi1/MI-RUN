@@ -44,13 +44,16 @@ IDENT [a-zA-Z0-9'_]
 <YYINITIAL>">"      	 return _SYMB_15;
 <YYINITIAL>"=="      	 return _SYMB_16;
 <YYINITIAL>"!="      	 return _SYMB_17;
-<YYINITIAL>"class"      	 return _SYMB_18;
-<YYINITIAL>"else"      	 return _SYMB_19;
-<YYINITIAL>"function"      	 return _SYMB_20;
-<YYINITIAL>"if"      	 return _SYMB_21;
-<YYINITIAL>"new"      	 return _SYMB_22;
-<YYINITIAL>"return"      	 return _SYMB_23;
-<YYINITIAL>"while"      	 return _SYMB_24;
+<YYINITIAL>"catch"      	 return _SYMB_18;
+<YYINITIAL>"class"      	 return _SYMB_19;
+<YYINITIAL>"else"      	 return _SYMB_20;
+<YYINITIAL>"function"      	 return _SYMB_21;
+<YYINITIAL>"if"      	 return _SYMB_22;
+<YYINITIAL>"new"      	 return _SYMB_23;
+<YYINITIAL>"return"      	 return _SYMB_24;
+<YYINITIAL>"throw"      	 return _SYMB_25;
+<YYINITIAL>"try"      	 return _SYMB_26;
+<YYINITIAL>"while"      	 return _SYMB_27;
 
 <YYINITIAL>"#"[^\n]*\n  ++yy_mylinenumber ; 	 /* BNFC single-line comment */;
 <YYINITIAL>"//"[^\n]*\n  ++yy_mylinenumber ; 	 /* BNFC single-line comment */;
@@ -59,7 +62,7 @@ IDENT [a-zA-Z0-9'_]
 <COMMENT>.      	 /* BNFC multi-line comment */;
 <COMMENT>[\n]   ++yy_mylinenumber ; 	 /* BNFC multi-line comment */;
 
-<YYINITIAL>{LETTER}({LETTER}|{DIGIT}|\_)*     	 yylval.string_ = strdup(yytext); return _SYMB_25;
+<YYINITIAL>{LETTER}({LETTER}|{DIGIT}|\_)*     	 yylval.string_ = strdup(yytext); return _SYMB_28;
 <YYINITIAL>"\""      	 BEGIN STRING;
 <STRING>\\      	 BEGIN ESCAPED;
 <STRING>\"      	 yylval.string_ = strdup(YY_PARSED_STRING); YY_BUFFER_RESET(); BEGIN YYINITIAL; return _STRING_;

@@ -1,5 +1,5 @@
-#ifndef INSTRUCTIONADD_HEADER
-#define INSTRUCTIONADD_HEADER
+#ifndef INSTRUCTIONTHROW_HEADER
+#define INSTRUCTIONTHROW_HEADER
 
 #include <iostream>
 
@@ -15,10 +15,10 @@
 #include "DataStack.H"
 #include "Heap.H"
 
-class InstructionADD : public Instruction{
+class InstructionTHROW : public Instruction{
+	private:
 	public:
-		InstructionADD(CallStack *callStack, DataStack * dataStack, Heap * heap) : Instruction(callStack, dataStack, heap){
-			
+		InstructionTHROW(CallStack *callStack, DataStack * dataStack, Heap * heap) : Instruction(callStack, dataStack, heap){
 		}
 		
 		void execute();

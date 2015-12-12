@@ -426,17 +426,17 @@ SReturn *SReturn::clone() const
 
 
 /********************   SWhile    ********************/
-SWhile::SWhile(Exp *p1, Stm *p2)
+SWhile::SWhile(Exp *p1, ListStm *p2)
 {
   exp_ = p1;
-  stm_ = p2;
+  liststm_ = p2;
 
 }
 
 SWhile::SWhile(const SWhile & other)
 {
   exp_ = other.exp_->clone();
-  stm_ = other.stm_->clone();
+  liststm_ = other.liststm_->clone();
 
 }
 
@@ -450,14 +450,14 @@ SWhile &SWhile::operator=(const SWhile & other)
 void SWhile::swap(SWhile & other)
 {
   std::swap(exp_, other.exp_);
-  std::swap(stm_, other.stm_);
+  std::swap(liststm_, other.liststm_);
 
 }
 
 SWhile::~SWhile()
 {
   delete(exp_);
-  delete(stm_);
+  delete(liststm_);
 
 }
 
@@ -474,19 +474,19 @@ SWhile *SWhile::clone() const
 
 
 /********************   SIfElse    ********************/
-SIfElse::SIfElse(Exp *p1, Stm *p2, Stm *p3)
+SIfElse::SIfElse(Exp *p1, ListStm *p2, ListStm *p3)
 {
   exp_ = p1;
-  stm_1 = p2;
-  stm_2 = p3;
+  liststm_1 = p2;
+  liststm_2 = p3;
 
 }
 
 SIfElse::SIfElse(const SIfElse & other)
 {
   exp_ = other.exp_->clone();
-  stm_1 = other.stm_1->clone();
-  stm_2 = other.stm_2->clone();
+  liststm_1 = other.liststm_1->clone();
+  liststm_2 = other.liststm_2->clone();
 
 }
 
@@ -500,16 +500,16 @@ SIfElse &SIfElse::operator=(const SIfElse & other)
 void SIfElse::swap(SIfElse & other)
 {
   std::swap(exp_, other.exp_);
-  std::swap(stm_1, other.stm_1);
-  std::swap(stm_2, other.stm_2);
+  std::swap(liststm_1, other.liststm_1);
+  std::swap(liststm_2, other.liststm_2);
 
 }
 
 SIfElse::~SIfElse()
 {
   delete(exp_);
-  delete(stm_1);
-  delete(stm_2);
+  delete(liststm_1);
+  delete(liststm_2);
 
 }
 

@@ -2,6 +2,7 @@
 #define FUNCTION_HEADER
 
 #include <iostream>
+
 #include <cstdio>
 #include <vector>
 #include <cstring>
@@ -13,17 +14,16 @@ class Function{
 	private:
 		std::string name;
 		int c_parameters;
-		std::vector<char> bc;
+		std::vector<unsigned char> bc;
 	public:
-		Function(std::string name, int c_parameters, std::vector<char> bc){
+		Function(std::string name, int c_parameters, std::vector<unsigned char> bc){
 			this->name = name;
 			this->c_parameters = c_parameters;
 			this->bc = bc;
 		}		
 		std::string getName();
-		char getBC(int pos);
+		unsigned char getBC(int pos);
 		int getIntBC(int pos);
-		void call();
 		int getNumParameters();
 };
 

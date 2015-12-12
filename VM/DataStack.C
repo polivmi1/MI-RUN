@@ -15,4 +15,3 @@ void DataStack::push(int a){
   else dataStack[stackSize] = a;
   ++stackSize;
 }
-

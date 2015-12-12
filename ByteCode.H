@@ -46,15 +46,15 @@ const std::string instructionTable[] = {"0",
 class Bytecode{
 	private:
 		int counter;
-		std::vector<char> bc;
+		std::vector<unsigned char> bc;
 			public:
 		//for while and if	
 		void zeroCounter(){counter = 0;}
 		int getCounter(){return counter;}
-		void changeByte(int pos, char b){bc[pos] = b;}
+		void changeByte(int pos, unsigned char b){bc[pos] = b;}
 		void changeIntByte(int pos, int b);
 		
-		void addByte(char b);
+		void addByte(unsigned char b);
 		void addInt(int b);
 		unsigned int size(){return bc.size();};
 		void writeToFile(std::ofstream &file);

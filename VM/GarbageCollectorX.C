@@ -1,10 +1,5 @@
 #include "GarbageCollector.H"
 
-void GarbageCollector::run(Heap * heap){
-	
-	printf("TODO FINISH GC\n");
-
-}
 
 int GarbageCollector::copy(int heapPos, Heap * heap) {
   heap->survivor[heap->allocPtr] = heap->eden[heapPos];
@@ -14,7 +9,8 @@ int GarbageCollector::copy(int heapPos, Heap * heap) {
 }
 
 void GarbageCollector::run(Heap * heap, CallStack * callStack, DataStack * dataStack) {
-  printf("BEGIN GC\n");
+  
+  DEB("BEGIN GC");
   
   heap->allocPtr = 0;
   
@@ -59,7 +55,7 @@ void GarbageCollector::run(Heap * heap, CallStack * callStack, DataStack * dataS
   
   swap(heap->eden, heap->survivor);
   
-  printf("END GC\n");
+  DEB("END GC");
 }
 
 

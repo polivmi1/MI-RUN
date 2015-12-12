@@ -4,13 +4,13 @@ std::string Function::getName(){
 	return name;
 }
 
-char Function::getBC(int pos){
+unsigned char Function::getBC(int pos){
 	return bc[pos];
 }
 
 int Function::getIntBC(int pos){
 	int t, ret = 0;
-	char a = getBC(pos);
+	unsigned char a = getBC(pos);
 	t = (int)a;
 	t = t<<24;
 	ret = ret | t;
@@ -33,6 +33,3 @@ int Function::getNumParameters(){
 	return c_parameters;
 }
 
-void Function::call(){
-	printf("TODO CALL FUNCTION, MAKE A NEW FRAME, STORE FUNCTION PARAMETERS FROM DATASTACK");
-}

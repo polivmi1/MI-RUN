@@ -99,9 +99,10 @@ ListId* pListId(const char *str);
 #define _SYMB_22 281
 #define _SYMB_23 282
 #define _SYMB_24 283
-#define _STRING_ 284
-#define _INTEGER_ 285
-#define _DOUBLE_ 286
+#define _SYMB_25 284
+#define _STRING_ 285
+#define _INTEGER_ 286
+#define _DOUBLE_ 287
 
 extern YYSTYPE yylval;
 

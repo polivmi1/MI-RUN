@@ -46,6 +46,8 @@ public:
   void visitSReturn(SReturn* p);
   void visitSWhile(SWhile* p);
   void visitSIfElse(SIfElse* p);
+  void visitSException(SException* p);
+  void visitSThrow(SThrow* p);
   void visitEInt(EInt* p);
   void visitEDouble(EDouble* p);
   void visitEString(EString* p);

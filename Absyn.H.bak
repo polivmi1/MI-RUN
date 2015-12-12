@@ -322,11 +322,11 @@ class SWhile : public Stm
 {
 public:
   Exp *exp_;
-  Stm *stm_;
+  ListStm *liststm_;
 
   SWhile(const SWhile &);
   SWhile &operator=(const SWhile &);
-  SWhile(Exp *p1, Stm *p2);
+  SWhile(Exp *p1, ListStm *p2);
   ~SWhile();
   virtual void accept(Visitor *v);
   virtual SWhile *clone() const;
@@ -337,12 +337,12 @@ class SIfElse : public Stm
 {
 public:
   Exp *exp_;
-  Stm *stm_1;
-  Stm *stm_2;
+  ListStm *liststm_1;
+  ListStm *liststm_2;
 
   SIfElse(const SIfElse &);
   SIfElse &operator=(const SIfElse &);
-  SIfElse(Exp *p1, Stm *p2, Stm *p3);
+  SIfElse(Exp *p1, ListStm *p2, ListStm *p3);
   ~SIfElse();
   virtual void accept(Visitor *v);
   virtual SIfElse *clone() const;

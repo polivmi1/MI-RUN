@@ -1,7 +1,7 @@
 CC = g++
 CCFLAGS = -g -W -Wall
 
-OBJS = Runtime.o NativeFunctions.o InstructionPUSHMEMBER.o InstructionSTOREMEMBER.o InstanceINT.o InstanceCLASS.o InstanceDOUBLE.o InstanceSTRING.o InstructionADD.o InstructionSUB.o InstructionDIV.o InstructionMUL.o InstructionCLT.o InstructionCGT.o InstructionRET.o InstructionCEQ.o InstructionCNEQ.o InstructionCJMP.o InstructionBJMP.o InstructionFJMP.o InstructionNEW.o InstructionPUSHID.o InstructionPUSHINT.o InstructionPUSHDOUBLE.o InstructionPUSHSTRING.o InstructionSTORE.o InstructionCALL.o InstructionMCALL.o Loader.o Instruction.o Heap.o Instance.o Class.o Function.o ConstantPool.o ClassPool.o DataStack.o GarbageCollector.o Frame.o CallStack.o
+OBJS = Runtime.o InstructionTHROW.o InstructionBTRY.o InstructionFTRY.o NativeFunctions.o InstructionPUSHMEMBER.o InstructionSTOREMEMBER.o InstanceINT.o InstanceCLASS.o InstanceDOUBLE.o InstanceSTRING.o InstructionADD.o InstructionSUB.o InstructionDIV.o InstructionMUL.o InstructionCLT.o InstructionCGT.o InstructionRET.o InstructionCEQ.o InstructionCNEQ.o InstructionCJMP.o InstructionBJMP.o InstructionFJMP.o InstructionNEW.o InstructionPUSHID.o InstructionPUSHINT.o InstructionPUSHDOUBLE.o InstructionPUSHSTRING.o InstructionSTORE.o InstructionCALL.o InstructionMCALL.o Loader.o Instruction.o Heap.o Instance.o Class.o Function.o ConstantPool.o ClassPool.o DataStack.o GarbageCollector.o Frame.o CallStack.o
 
 .PHONY: clean distclean
 
@@ -14,46 +14,46 @@ TestRun: ${OBJS} TestRun.o
 	@echo "Linking TestRun..."
 	${CC} ${CCFLAGS} ${OBJS} TestRun.o -o TestRun
 
-CallStack.o: CallStack.C CallStack.H Frame.H ClassPool.H
+CallStack.o: CallStack.C CallStack.H Frame.H ClassPool.H Debug.H
 	${CC} ${CCFLAGS} -c CallStack.C
 		
-Frame.o: Frame.C Frame.H Function.H Class.H
+Frame.o: Frame.C Frame.H Function.H Class.H Debug.H
 	${CC} ${CCFLAGS} -c Frame.C
 	
-Instruction.o: Instruction.C Instruction.H CallStack.H DataStack.H Heap.H
+Instruction.o: Instruction.C Instruction.H CallStack.H DataStack.H Heap.H Debug.H
 	${CC} ${CCFLAGS} -c Instruction.C
 	
-GarbageCollector.o: GarbageCollector.C GarbageCollector.H Heap.H
+GarbageCollector.o: GarbageCollector.C GarbageCollector.H Heap.H Debug.H
 	${CC} ${CCFLAGS} -c GarbageCollector.C
 	
-DataStack.o: DataStack.C DataStack.H
+DataStack.o: DataStack.C DataStack.H Debug.H
 	${CC} ${CCFLAGS} -c DataStack.C
 	
-ClassPool.o: ClassPool.C ClassPool.H Class.H
+ClassPool.o: ClassPool.C ClassPool.H Class.H Debug.H
 	${CC} ${CCFLAGS} -c ClassPool.C
 		
-ConstantPool.o: ConstantPool.C ConstantPool.H
+ConstantPool.o: ConstantPool.C ConstantPool.H Debug.H
 	${CC} ${CCFLAGS} -c ConstantPool.C
 
-Instance.o: Instance.C Instance.H CallStack.H DataStack.H
+Instance.o: Instance.C Instance.H CallStack.H DataStack.H Debug.H
 	${CC} ${CCFLAGS} -c Instance.C
 
-Heap.o: Heap.C Heap.H Instance.H InstanceCLASS.H InstanceSTRING.H InstanceDOUBLE.H InstanceINT.H Class.H
+Heap.o: Heap.C Heap.H Instance.H InstanceCLASS.H InstanceSTRING.H InstanceDOUBLE.H InstanceINT.H Class.H Debug.H
 	${CC} ${CCFLAGS} -c Heap.C
 	
-Class.o: Class.C Class.H Function.H
+Class.o: Class.C Class.H Function.H Debug.H
 	${CC} ${CCFLAGS} -c Class.C
 	
-Function.o: Function.C Function.H
+Function.o: Function.C Function.H Debug.H
 	${CC} ${CCFLAGS} -c Function.C
 
-Loader.o: Loader.C Loader.H ClassPool.H Class.H Function.H ConstantPool.H
+Loader.o: Loader.C Loader.H Debug.H ClassPool.H Class.H Function.H ConstantPool.H Debug.H
 	${CC} ${CCFLAGS} -c Loader.C
 
-Runtime.o: Runtime.C Runtime.H NativeFunctions.H Loader.H Heap.H ConstantPool.H ClassPool.H CallStack.H DataStack.H GarbageCollector.H Frame.H InstructionADD.H InstructionSUB.H InstructionDIV.H InstructionMUL.H InstructionCLT.H InstructionCGT.H InstructionCEQ.H InstructionCNEQ.H InstructionCJMP.H InstructionBJMP.H InstructionFJMP.H InstructionNEW.H InstructionPUSHID.H InstructionPUSHINT.H InstructionPUSHDOUBLE.H InstructionPUSHSTRING.H InstructionSTORE.H InstructionCALL.H InstructionMCALL.H
+Runtime.o: Runtime.C Runtime.H Debug.H InstructionTHROW.H InstructionBTRY.H InstructionFTRY.H NativeFunctions.H Loader.H Heap.H ConstantPool.H ClassPool.H CallStack.H DataStack.H GarbageCollector.H Frame.H InstructionADD.H InstructionSUB.H InstructionDIV.H InstructionMUL.H InstructionCLT.H InstructionCGT.H InstructionCEQ.H InstructionCNEQ.H InstructionCJMP.H InstructionBJMP.H InstructionFJMP.H InstructionNEW.H InstructionPUSHID.H InstructionPUSHINT.H InstructionPUSHDOUBLE.H InstructionPUSHSTRING.H InstructionSTORE.H InstructionCALL.H InstructionMCALL.H
 	${CC} ${CCFLAGS} -c Runtime.C
 
-TestRun.o: TestRun.C Runtime.H
+TestRun.o: TestRun.C Runtime.H Debug.H
 	${CC} ${CCFLAGS} -c TestRun.C
 	
 InstructionADD.o: InstructionADD.C InstructionADD.H Instruction.H Instance.H Heap.H CallStack.H DataStack.H
@@ -136,3 +136,12 @@ InstanceSTRING.o: InstanceSTRING.C InstanceSTRING.H Instance.H
 	
 NativeFunctions.o: NativeFunctions.C NativeFunctions.H Heap.H DataStack.H InstanceSTRING.H InstanceINT.H InstanceDOUBLE.H
 	${CC} ${CCFLAGS} -c NativeFunctions.C
+	
+InstructionBTRY.o: InstructionBTRY.C InstructionBTRY.H Heap.H DataStack.H CallStack.H
+	${CC} ${CCFLAGS} -c InstructionBTRY.C
+	
+InstructionFTRY.o: InstructionFTRY.C InstructionFTRY.H Heap.H DataStack.H CallStack.H
+	${CC} ${CCFLAGS} -c InstructionFTRY.C
+	
+InstructionTHROW.o: InstructionTHROW.C InstructionTHROW.H Heap.H DataStack.H CallStack.H
+	${CC} ${CCFLAGS} -c InstructionTHROW.C

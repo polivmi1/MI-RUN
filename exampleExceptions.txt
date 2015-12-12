@@ -1,0 +1,44 @@
+class main : Base {
+	function main () {
+	  a = 1;
+	  b = 2;
+	  c = 3;
+	  try{
+		this.print(a);
+		this.print(a);
+		this.ada();
+		throw "asa";
+		this.print(a);
+		this.print(a);
+	  }catch{
+		this.print(b);
+		this.print(b);
+		this.print(b);
+		this.print(b);	  
+	  }
+		this.print(c);
+		this.print(c);
+		this.print(c);
+		this.print(c);
+		return 0;
+	}	
+	function ada() {
+	  
+		this.print("ada1");
+		this.print("ada1");
+		this.print("ada1");
+		this.print("ada1");
+		this.print("ada1");
+		this.print("ada1");
+		throw "asa";
+		this.print("ada2");
+		this.print("ada2");
+		this.print("ada2");
+		this.print("ada2");
+		this.print("ada2");
+		this.print("ada2");
+		return 0;
+	}	
+	
+}
+

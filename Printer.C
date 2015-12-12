@@ -313,6 +313,37 @@ void PrintAbsyn::visitSIfElse(SIfElse* p)
   _i_ = oldi;
 }
 
+void PrintAbsyn::visitSException(SException* p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(_L_PAREN);
+
+  render("try");
+  render('{');
+  if(p->liststm_1) {_i_ = 0; p->liststm_1->accept(this);}  render('}');
+  render("catch");
+  render('{');
+  if(p->liststm_2) {_i_ = 0; p->liststm_2->accept(this);}  render('}');
+
+  if (oldi > 0) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitSThrow(SThrow* p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(_L_PAREN);
+
+  render("throw");
+  visitString(p->string_);
+  render(';');
+
+  if (oldi > 0) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
 void PrintAbsyn::visitListStm(ListStm *liststm)
 {
   for (ListStm::const_iterator i = liststm->begin() ; i != liststm->end() ; ++i)
@@ -806,6 +837,26 @@ void ShowAbsyn::visitSIfElse(SIfElse* p)
   p->liststm_1->accept(this);
   bufAppend(' ');
   p->liststm_2->accept(this);
+  bufAppend(' ');
+  bufAppend(')');
+}
+void ShowAbsyn::visitSException(SException* p)
+{
+  bufAppend('(');
+  bufAppend("SException");
+  bufAppend(' ');
+  p->liststm_1->accept(this);
+  bufAppend(' ');
+  p->liststm_2->accept(this);
+  bufAppend(' ');
+  bufAppend(')');
+}
+void ShowAbsyn::visitSThrow(SThrow* p)
+{
+  bufAppend('(');
+  bufAppend("SThrow");
+  bufAppend(' ');
+  visitString(p->string_);
   bufAppend(' ');
   bufAppend(')');
 }

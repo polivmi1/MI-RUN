@@ -14,6 +14,7 @@
 #include "InstanceSTRING.H"
 #include "InstanceCLASS.H"
 #include "Class.H"
+#include "Debug.H"
 
 #define INIT_HEAP_SIZE 64
 #define MAX_AGE 10

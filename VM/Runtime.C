@@ -20,10 +20,10 @@ void Runtime::initialize(const std::string &file){
 
 bool Runtime::run(){
 	while(!callStack->empty()){
-		//gc->run(heap);
+	
 		gc->run(heap,callStack,dataStack);
-		//std::cout << "Fetching and executing instruction" << std::endl;
-    Instruction * instr = fetch();
+		//DEB("Fetching and executing instruction");
+        Instruction * instr = fetch();
 		instr->execute();
 		delete instr;
 	}
@@ -70,7 +70,7 @@ Instruction * Runtime::fetch(){
 "<END CLASS>",
 "<BEGIN FUN>",
 "<END FUN>",
-"<CLASSES>","","","","","","","","","","","","","","PUSHMEMBER","STOREMEMBER"};//next = 0x23
+"<CLASSES>","","","","","","","","","","","THROW","BTRY","FTRY","PUSHMEMBER","STOREMEMBER"};//next = 0x23
 	
 	
 	//DEB((int)instruction);
@@ -136,6 +136,15 @@ Instruction * Runtime::fetch(){
 		case 0x0A:
 			return new InstructionRET(callStack, dataStack, heap);
 			break;
+		case 0x2D:
+			return new InstructionTHROW(callStack, dataStack, heap);
+			break;
+		case 0x2E:
+			return new InstructionBTRY(callStack, dataStack, heap);
+			break;
+		case 0x2F:
+			return new InstructionFTRY(callStack, dataStack, heap);
+			break;
 		case 0x30:
 			return new InstructionPUSHMEMBER(callStack, dataStack, heap, constantPool);
 			break;
@@ -143,6 +152,14 @@ Instruction * Runtime::fetch(){
 			return new InstructionSTOREMEMBER(callStack, dataStack, heap, constantPool);//CHECK DELETE OLD VALUE
 			break;
 		default:		
+		std::cout << instructionTable[instruction] << std::endl;
+			std::cout << instructionTable[f->getFunction()->getBC(f->getEIP()+1)] << std::endl;
+			std::cout << instructionTable[f->getFunction()->getBC(f->getEIP()+2)] << std::endl;
+			std::cout << instructionTable[f->getFunction()->getBC(f->getEIP()+3)] << std::endl;
+			std::cout << instructionTable[f->getFunction()->getBC(f->getEIP()+4)] << std::endl;
+			std::cout << instructionTable[f->getFunction()->getBC(f->getEIP()+5)] << std::endl;
+			std::cout << instructionTable[f->getFunction()->getBC(f->getEIP()+6)] << std::endl;
+			std::cout << instructionTable[f->getFunction()->getBC(f->getEIP()+7)] << std::endl;
 			std::cout << "ERROR: UNKNOWN INSTRUCTION" << std::endl;
 			break;
 	}
