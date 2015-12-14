@@ -21,7 +21,6 @@ void Runtime::initialize(const std::string &file){
 bool Runtime::run(){
 	while(!callStack->empty()){
 	
-		gc->run(heap,callStack,dataStack);
 		//DEB("Fetching and executing instruction");
         Instruction * instr = fetch();
 		instr->execute();

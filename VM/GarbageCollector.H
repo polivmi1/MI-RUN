@@ -18,11 +18,16 @@ class GarbageCollector{
 	private:
     CallStack * cs;
     DataStack * ds;
-    void marker(int idx, bool * mark, Instance ** heap);
+    int copy(int heapPos, Heap * heap);
 	public:
     GarbageCollector(CallStack * callStack, DataStack * dataStack) : cs(callStack), ds(dataStack) {}
-		void run(Heap * heap);
-		void run(Heap * heap, CallStack * callStack, DataStack * dataStack);
+		void scavenge(Heap * heap);
+		void scavenge(Heap * heap, CallStack * callStack, DataStack * dataStack);
+		void runOld(Heap * heap);
+		void runOld(Heap * heap, CallStack * callStack, DataStack * dataStack);
+		~GarbageCollector() {
+		  // TODO
+    }
 };
 
 #endif

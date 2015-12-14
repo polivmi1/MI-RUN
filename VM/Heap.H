@@ -18,30 +18,70 @@
 #include "Debug.H"
 class GarbageCollector;
 
-#define INIT_HEAP_SIZE 2
+#define INIT_NEW_SIZE 4
+#define INIT_OLD_SIZE 1024
 
 class Heap{
 	private:
-    Instance ** heap;
-    int heapSize;
-		//std::vector<Instance *> heap;
+    
+    class Oracle {
+      std::vector<int> v;
+      int cnt;
+     public:
+      Oracle() : cnt(0) {}
+      void add(int val) {
+        if(cnt == (int)v.size()) v.push_back(val);
+        else v[cnt] = val;
+        cnt++;
+      }
+      int& operator[](const int& idx) {
+        return v[idx];
+      }
+      void remove(int idx) {
+        std::swap(v[idx],v[cnt-1]);
+        cnt--;
+      }
+      int size() {
+        return cnt;
+      }
+    };
+    
+    Instance ** old;
 		std::stack<int> available;
 		std::vector<int> occupied;
 		int occupiedCnt;
-		
+		int oldSize;
+
+    std::pair<Instance*,int> * eden, * survivor;
+    int allocPtr;
+    int newSize;
+    
     GarbageCollector * gc;
     DataStack * ds;
-    
-		int addInstance(Instance * );
-		void expandHeap();
 
+		int addInstance(Instance * );
+		void expandNew();
+		void expandOld();
+		int tenure(Instance * inst);
 	
 	public:
-    Heap(GarbageCollector * garbageCollector, DataStack * dataStack) : heapSize(INIT_HEAP_SIZE), occupiedCnt(0) {
+
+    Oracle oracle;
+
+    Heap(GarbageCollector * garbageCollector, DataStack * dataStack) : occupiedCnt(0), oldSize(INIT_OLD_SIZE), allocPtr(0), newSize(INIT_NEW_SIZE) {
       gc = garbageCollector;
       ds = dataStack;
-      heap = new Instance*[INIT_HEAP_SIZE];
-      for(int i = INIT_HEAP_SIZE-1; i >= 0; --i) available.push(i);
+      old = new Instance*[INIT_OLD_SIZE];
+      for(int i = INIT_OLD_SIZE-1; i >= 0; --i) available.push(i);
+      eden = new std::pair<Instance*,int>[INIT_NEW_SIZE];
+      survivor = new std::pair<Instance*,int>[INIT_NEW_SIZE];
+      for(int i = 0; i < INIT_NEW_SIZE; i++) eden[i].first = NULL;
+    }
+    ~Heap() {
+      // TODO
+      delete [] eden;
+      delete [] survivor;
+      delete [] old;
     }
 		int addInstanceINT(int value);
 		int addInstanceDOUBLE(double value);

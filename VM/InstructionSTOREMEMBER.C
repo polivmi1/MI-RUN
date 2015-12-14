@@ -22,6 +22,13 @@ void InstructionSTOREMEMBER::execute(){
 	int ref = dataStack->pop();
 	inst->setRefMember(varName, ref);
 	
+	if(ref1 >= 0 && ref < 0) { // setting new space instance to old space instance
+    if(!inst->isOracled()) {
+      heap->oracle.add(ref1);
+      inst->setOracled();
+    }
+  }
+	
 	//dataStack->push(heap->addInstance(new InstanceDOUBLE(param, constantPool)));
 }
 

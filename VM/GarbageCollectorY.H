@@ -18,7 +18,7 @@ class GarbageCollector{
 	private:
     CallStack * cs;
     DataStack * ds;
-    int copy(int heapPos, Heap * heap);
+    void marker(int idx, bool * mark, Instance ** heap);
 	public:
     GarbageCollector(CallStack * callStack, DataStack * dataStack) : cs(callStack), ds(dataStack) {}
 		void run(Heap * heap);

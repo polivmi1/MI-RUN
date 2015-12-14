@@ -18,28 +18,30 @@
 #include "Debug.H"
 class GarbageCollector;
 
-#define INIT_HEAP_SIZE 4
-#define MAX_AGE 10
+#define INIT_HEAP_SIZE 2
 
 class Heap{
 	private:
-    std::pair<Instance*,int> * eden, * survivor;
-    int allocPtr;
+    Instance ** heap;
     int heapSize;
-    
+		//std::vector<Instance *> heap;
+		std::stack<int> available;
+		std::vector<int> occupied;
+		int occupiedCnt;
+		
     GarbageCollector * gc;
     DataStack * ds;
-
+    
 		int addInstance(Instance * );
 		void expandHeap();
+
 	
 	public:
-    Heap(GarbageCollector * garbageCollector, DataStack * dataStack) : allocPtr(0), heapSize(INIT_HEAP_SIZE) {
+    Heap(GarbageCollector * garbageCollector, DataStack * dataStack) : heapSize(INIT_HEAP_SIZE), occupiedCnt(0) {
       gc = garbageCollector;
       ds = dataStack;
-      eden = new std::pair<Instance*,int>[INIT_HEAP_SIZE];
-      survivor = new std::pair<Instance*,int>[INIT_HEAP_SIZE];
-      for(int i = 0; i < INIT_HEAP_SIZE; i++) eden[i].first = NULL;
+      heap = new Instance*[INIT_HEAP_SIZE];
+      for(int i = INIT_HEAP_SIZE-1; i >= 0; --i) available.push(i);
     }
 		int addInstanceINT(int value);
 		int addInstanceDOUBLE(double value);

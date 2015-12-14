@@ -1,25 +1,29 @@
 #include "Heap.H"
 
 int Heap::addInstance(Instance * inst){
-  if(allocPtr == heapSize) gc->run(this);
-  if(allocPtr == heapSize) expandHeap();
-  eden[allocPtr] = std::make_pair(inst,0);
-  return allocPtr++;
+  if(available.empty()) gc->run(this);
+  if(available.empty()) expandHeap();
+  int pos = available.top();
+  available.pop();
+  heap[pos] = inst;
+  if(occupiedCnt == (int)occupied.size()) occupied.push_back(pos);
+  else occupied[occupiedCnt] = pos;
+  ++occupiedCnt;
+  DEB("Allocate at address");
+  DEB(pos);
+  return pos;
 }
 
 void Heap::expandHeap() {
   DEB("Expanding heap from");
   DEB(heapSize);
-  std::pair<Instance*,int> * newEden = new std::pair<Instance*,int>[2*heapSize];
-  std::pair<Instance*,int> * newSurvivor = new std::pair<Instance*,int>[2*heapSize];
-  //Instance ** newHeap = new Instance*[2*heapSize];
-  for(int i = 0; i < heapSize; ++i) newEden[i] = eden[i];
-  for(int i = heapSize; i < 2*heapSize; ++i) newEden[i].first = NULL;
+  Instance ** newHeap = new Instance*[2*heapSize];
+  for(int i = 0; i < heapSize; ++i) newHeap[i] = heap[i];
+  for(int i = heapSize; i < 2*heapSize; ++i) newHeap[i] = NULL;
+  for(int i = 2*heapSize-1; i >= heapSize; --i) available.push(i);
   heapSize *= 2;
-  delete [] eden;
-  delete [] survivor;
-  eden = newEden;
-  survivor = newSurvivor;
+  delete [] heap;
+  heap = newHeap;
 }
 
 int Heap::addInstanceINT(int value){
@@ -61,8 +65,8 @@ int Heap::addInstanceCLASS(Class * value){
 Instance * Heap::getInstance(int ref){
   DEB("Address: ");
   DEB(ref);
-	if(ref >= heapSize || eden[ref].first == NULL){
+	if(ref >= heapSize || heap[ref] == NULL){
 		throw std::runtime_error("Heap doesn't contain that address " + ref);
 	}
-	return eden[ref].first;
+	return heap[ref];
 }
