@@ -25,6 +25,7 @@ class GarbageCollector{
 		void scavenge(Heap * heap, CallStack * callStack, DataStack * dataStack);
 		void runOld(Heap * heap);
 		void runOld(Heap * heap, CallStack * callStack, DataStack * dataStack);
+    void marker(int idx, Instance ** heap);
 		~GarbageCollector() {
 		  // TODO
     }

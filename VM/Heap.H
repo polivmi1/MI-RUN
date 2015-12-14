@@ -19,7 +19,7 @@
 class GarbageCollector;
 
 #define INIT_NEW_SIZE 4
-#define INIT_OLD_SIZE 1024
+#define INIT_OLD_SIZE 8
 
 class Heap{
 	private:

@@ -44,5 +44,6 @@ void GarbageCollector::run(Heap * heap, CallStack * callStack, DataStack * dataS
     }
   }
   heap->occupiedCnt = occCnt;
+  delete [] mark;
   DEB("END GC");
 }

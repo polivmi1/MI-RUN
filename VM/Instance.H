@@ -14,9 +14,9 @@
 
 /*
   FLAGS:
-  +-----+------------+--------+
-  | 28b | 1b oracled | 3b age |
-  +-----+------------+--------+
+  +-----+------------+--------+----------------------+
+  | 28b | 1b oracled | 2b age | 1b age/reachableMark |
+  +-----+------------+--------+----------------------+
 */
 
 class Instance{
@@ -41,9 +41,12 @@ class Instance{
 		inline int getAge() { return flags & 0x07; }
 		inline bool isOracled() { return flags & 0x08; }
 		inline void setOracled() { flags |= 0x08; }
-		inline void setNotOracled() { flags &= ~0x08; }
+		inline void unsetOracled() { flags &= ~0x08; }
 		// increment age and return true if instance is too old (8) flag oracled is set in the process, but instance need to be oracled outside
 		inline bool grow() { return (++flags & 0x07) == 0; } 
+		inline void setMarked() { flags |= 0x01; }
+		inline void unsetMarked() { flags &= ~0x01; }
+		inline bool isMarked() { return flags & 0x01; }
 		
 };
 
